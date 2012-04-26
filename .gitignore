@@ -5,6 +5,7 @@ images
 cache
 chroot
 .stage
+.lock
 config/binary
 config/bootstrap
 config/common
