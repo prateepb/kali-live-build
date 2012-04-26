@@ -1,5 +1,7 @@
 binary.*
+prepare.log
 binary
+images
 cache
 chroot
 .stage
