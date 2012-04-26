@@ -1,0 +1,9 @@
+binary.*
+binary
+cache
+chroot
+.stage
+config/binary
+config/bootstrap
+config/common
+config/source

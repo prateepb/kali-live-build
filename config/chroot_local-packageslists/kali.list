@@ -1,0 +1,7 @@
+# kali packages
+
+#include <gnome>
+#include <rescue>
+
+amap
+nmap

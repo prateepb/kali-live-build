@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# Various comments
+# live-build doesn't work if --debian-installer-distribution is unknown of
+# debian-cd => we have to override it as "squeeze" and install a symlink on the
+# server
+
+if [ ! -e /usr/share/live/build/data/debian-cd/kali ]; then
+	echo "ERROR: Run this first"
+	echo "ln -sf squeeze /usr/share/live/build/data/debian-cd/kali"
+fi
+
+lb config noauto \
+	--packages-lists "kali" \
+	--distribution "kali" \
+	--archive-areas "main contrib non-free" \
+	--bootstrap-config stable \
+	--bootstrap-keyring "kali-archive-keyring" \
+	--mirror-bootstrap http://repo.kali.org/kali \
+	--mirror-debian-installer http://repo.kali.org/kali \
+	--mirror-chroot-security http://repo.kali.org/security \
+	--mirror-binary http://repo.kali.org/kali \
+	--mirror-binary-security http://repo.kali.org/security \
+	--iso-application "Kali Linux" \
+	--iso-publisher "Kali" \
+	--iso-volume "Kali Live" \
+	--debian-installer live \
+	--linux-packages linux-image \
+	--linux-flavours kali \
+	"$@"
