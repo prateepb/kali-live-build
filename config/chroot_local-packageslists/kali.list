@@ -3,5 +3,8 @@
 #include <gnome>
 #include <rescue>
 
+kali-archive-keyring
+kali-menu
+
 amap
 nmap
