@@ -21,5 +21,6 @@ for KALI_ARCH in $KALI_ARCHES; do
 	mv binary.log images/kali-$KALI_VERSION-$KALI_ARCH.log
 done
 
-sha1sum images/*.iso >>images/SHA1SUMS
+cd images
+sha1sum *.iso >SHA1SUMS
 
