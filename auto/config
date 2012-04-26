@@ -14,8 +14,10 @@ lb config noauto \
 	--packages-lists "kali" \
 	--distribution "kali" \
 	--archive-areas "main contrib non-free" \
-	--bootstrap-config stable \
-	--bootstrap-keyring "kali-archive-keyring" \
+	--bootstrap cdebootstrap \
+	--bootstrap-config squeeze \
+	--bootstrap-keyring /usr/share/keyrings/kali-archive-keyring.gpg \
+	--keyring-packages kali-archive-keyring \
 	--mirror-bootstrap http://repo.kali.org/kali \
 	--mirror-debian-installer http://repo.kali.org/kali \
 	--mirror-chroot-security http://repo.kali.org/security \
