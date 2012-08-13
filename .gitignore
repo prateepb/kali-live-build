@@ -4,8 +4,11 @@ binary
 images
 cache
 chroot
+chroot.packages.install
+chroot.packages.live
 .stage
 .lock
+.build/
 config/binary
 config/bootstrap
 config/common
