@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# /usr/lib/live/build/lb_binary_linux-image expects /boot/initrd.img-* to
+# expand to something but the kali image has no initrd
+
+touch /boot/initrd.img-fake
+
+# somehow we need to replace wheezy with kali
+sed -i -e 's/wheezy/kali/g' /etc/apt/sources.list
+

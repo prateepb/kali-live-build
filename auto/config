@@ -1,27 +1,27 @@
 #!/bin/sh
 
-# Various comments
-# live-build doesn't work if --debian-installer-distribution is unknown of
-# debian-cd => we have to override it as "squeeze" and install a symlink on the
-# server
-
-if [ ! -e /usr/share/live/build/data/debian-cd/kali ]; then
-	echo "ERROR: Run this first"
-	echo "ln -sf squeeze /usr/share/live/build/data/debian-cd/kali"
-fi
-
 lb config noauto \
-	--packages-lists "kali" \
 	--distribution "kali" \
+	--parent-distribution "wheezy" \
+	--debian-installer-distribution "kali" \
+	--parent-debian-installer-distribution "wheezy" \
 	--archive-areas "main contrib non-free" \
+	--parent-archive-areas "main contrib non-free" \
 	--bootstrap cdebootstrap \
-	--bootstrap-config squeeze \
 	--bootstrap-keyring /usr/share/keyrings/kali-archive-keyring.gpg \
 	--keyring-packages kali-archive-keyring \
+	--volatile false \
+	--backports false \
+	--source false \
+	--parent-mirror-bootstrap http://repo.kali.org/kali \
 	--mirror-bootstrap http://repo.kali.org/kali \
+	--parent-mirror-debian-installer http://repo.kali.org/kali \
 	--mirror-debian-installer http://repo.kali.org/kali \
+	--parent-mirror-chroot-security http://repo.kali.org/security \
 	--mirror-chroot-security http://repo.kali.org/security \
+	--parent-mirror-binary http://repo.kali.org/kali \
 	--mirror-binary http://repo.kali.org/kali \
+	--parent-mirror-binary-security http://repo.kali.org/security \
 	--mirror-binary-security http://repo.kali.org/security \
 	--iso-application "Kali Linux" \
 	--iso-publisher "Kali" \
@@ -29,5 +29,4 @@ lb config noauto \
 	--debian-installer live \
 	--linux-packages linux-image \
 	--linux-flavours kali \
-	--username root \
 	"$@"

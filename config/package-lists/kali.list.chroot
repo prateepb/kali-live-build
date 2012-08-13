@@ -1,7 +1,6 @@
 # kali packages
 
-#include <gnome>
-#include <rescue>
+gnome-core
 
 kali-archive-keyring
 kali-menu
