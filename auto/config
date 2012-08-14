@@ -9,11 +9,6 @@ if [ ! -e /usr/share/live/build/data/debian-cd/kali ]; then
        echo "ln -sf wheezy /usr/share/live/build/data/debian-cd/kali"
 fi
 
-# --bootstrap-include "initramfs-tools" => work around lack of
-# dependency on linux-image-3.2.6-kali
-
-export LB_BOOTSTRAP_INCLUDE=initramfs-tools
-
 lb config noauto \
 	--distribution "kali" \
 	--parent-distribution "kali" \
