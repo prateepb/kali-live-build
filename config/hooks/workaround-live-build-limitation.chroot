@@ -1,5 +1,0 @@
-#!/bin/sh
-
-# somehow we need to replace wheezy with kali
-sed -i -e 's/wheezy/kali/g' /etc/apt/sources.list
-

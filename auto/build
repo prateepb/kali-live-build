@@ -6,4 +6,6 @@
 # /usr/share/live/build/functions/releases.sh)
 export RELEASE_kali="7.0"
 
+export CDEBOOTSTRAP_OPTIONS="--suite-config wheezy"
+
 lb build noauto "$@" 2>&1 | tee binary.log

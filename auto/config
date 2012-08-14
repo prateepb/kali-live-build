@@ -7,7 +7,7 @@ export LB_BOOTSTRAP_INCLUDE=initramfs-tools
 
 lb config noauto \
 	--distribution "kali" \
-	--parent-distribution "wheezy" \
+	--parent-distribution "kali" \
 	--debian-installer-distribution "kali" \
 	--parent-debian-installer-distribution "wheezy" \
 	--archive-areas "main contrib non-free" \
