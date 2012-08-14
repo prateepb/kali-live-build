@@ -1,5 +1,14 @@
 #!/bin/sh
 
+# Various comments
+# live-build doesn't work if --parent-debian-distribution is unknown of
+# debian-cd => we have to put a symlink so that it deals with kali like wheezy
+
+if [ ! -e /usr/share/live/build/data/debian-cd/kali ]; then
+       echo "ERROR: Run this first"
+       echo "ln -sf wheezy /usr/share/live/build/data/debian-cd/kali"
+fi
+
 # --bootstrap-include "initramfs-tools" => work around lack of
 # dependency on linux-image-3.2.6-kali
 
