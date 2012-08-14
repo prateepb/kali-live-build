@@ -5,6 +5,9 @@ set -e
 KALI_ARCHES="i386 amd64"
 KALI_VERSION="${VERSION:-daily}"
 
+# XXX: Use a git checkout of live-build until we have a good version in wheezy
+export LIVE_BUILD=/srv/cdimage.kali.org/live/live-build
+
 cd $(dirname $0)
 
 for KALI_ARCH in $KALI_ARCHES; do
