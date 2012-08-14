@@ -11,26 +11,18 @@ fi
 
 lb config noauto \
 	--distribution "kali" \
-	--parent-distribution "kali" \
 	--debian-installer-distribution "kali" \
-	--parent-debian-installer-distribution "wheezy" \
 	--archive-areas "main contrib non-free" \
-	--parent-archive-areas "main contrib non-free" \
 	--bootstrap cdebootstrap \
 	--bootstrap-keyring /usr/share/keyrings/kali-archive-keyring.gpg \
 	--keyring-packages kali-archive-keyring \
 	--volatile false \
 	--backports false \
 	--source false \
-	--parent-mirror-bootstrap http://repo.kali.org/kali \
 	--mirror-bootstrap http://repo.kali.org/kali \
-	--parent-mirror-debian-installer http://repo.kali.org/kali \
 	--mirror-debian-installer http://repo.kali.org/kali \
-	--parent-mirror-chroot-security http://repo.kali.org/security \
 	--mirror-chroot-security http://repo.kali.org/security \
-	--parent-mirror-binary http://repo.kali.org/kali \
 	--mirror-binary http://repo.kali.org/kali \
-	--parent-mirror-binary-security http://repo.kali.org/security \
 	--mirror-binary-security http://repo.kali.org/security \
 	--iso-application "Kali Linux" \
 	--iso-publisher "Kali" \
