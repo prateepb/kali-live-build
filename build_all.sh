@@ -5,6 +5,9 @@ set -e
 KALI_ARCHES="i386 amd64"
 KALI_VERSION="${VERSION:-daily}"
 
+# Set sane PATH (cron seems to lack /sbin/ dirs)
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
 # XXX: Use a git checkout of live-build until we have a good version in wheezy
 export LIVE_BUILD=/srv/cdimage.kali.org/live/live-build
 
