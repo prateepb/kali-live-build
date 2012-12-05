@@ -2,7 +2,7 @@
 
 set -e
 
-KALI_ARCHES="i386 amd64"
+KALI_ARCHES="amd64 i386"
 KALI_VERSION="${VERSION:-daily}"
 
 # Set sane PATH (cron seems to lack /sbin/ dirs)
