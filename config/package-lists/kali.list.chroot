@@ -1,10 +1,15 @@
-# kali packages
-
-gnome-core
-
+# kali essential
 kali-archive-keyring
-kali-menu
+sudo
+
+# kali desktop
+gnome-core
+gnome-human-icon-theme
 kali-root-login
 
+# kali global desktop
+kali-menu
+	
+# kali packages
 amap
 nmap
