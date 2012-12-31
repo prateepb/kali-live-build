@@ -12,7 +12,6 @@ if (/usr/bin/which gconftool-2); then
 	gconftool-2 --type float -s "/apps/gnome-terminal/profiles/Default/background_darkness" 0.65
 	gconftool -s --type bool "/apps/gnome-terminal/global/confirm_window_close" false
 	gsettings set org.gnome.desktop.background show-desktop-icons true
-	gsettings set org.gnome.desktop.wm.preferences theme AgingGorilla
 	dbus-launch gsettings set org.gnome.desktop.session session-name 'gnome-fallback'
 else
 	echo "[*] gnome-core not installed."
