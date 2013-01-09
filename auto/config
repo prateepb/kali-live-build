@@ -20,6 +20,8 @@ lb config noauto \
 	--updates false \
 	--backports false \
 	--source false \
+	--firmware-binary true \
+	--firmware-chroot true \
 	--mirror-bootstrap http://repo.kali.org/kali \
 	--mirror-debian-installer http://repo.kali.org/kali \
 	--mirror-chroot-security http://repo.kali.org/security \
