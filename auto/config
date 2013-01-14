@@ -32,6 +32,5 @@ lb config noauto \
 	--iso-volume "Kali Live" \
 	--debian-installer live \
 	--linux-packages linux-image \
-	--linux-flavours kali \
 	--bootappend-live "boot=live config live-config.username=root persistent" \
 	"$@"
