@@ -3,9 +3,14 @@ kali-archive-keyring
 sudo
 
 # kali desktop
+#if ARCHITECTURES i386 amd64
 gnome-core
 gnome-human-icon-theme
 kali-root-login
+#endif
+#if ARCHITECTURES armel armhf
+xfce4
+#endif
 
 # kali global desktop
 kali-menu
