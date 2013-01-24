@@ -13,6 +13,7 @@ xfce4
 
 # kali global desktop
 kali-menu
+kali-defaults
 	
 # kali packages
 amap
