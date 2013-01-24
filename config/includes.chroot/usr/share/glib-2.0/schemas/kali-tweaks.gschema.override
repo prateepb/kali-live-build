@@ -1,0 +1,16 @@
+[org.gnome.desktop.session]
+session-name='gnome-fallback'
+[org.gnome.desktop.background]
+show-desktop-icons=true
+[org.gnome.desktop.background]
+show-desktop-icons=true
+[org.gnome.nautilus.desktop]
+computer-icon-visible=true
+[org.gnome.shell.overrides]
+button-layout='close,minimize,maximize'
+[org.gnome.nautilus.desktop]
+trash-icon-visible=false
+home-icon-visible=false
+[org.gnome.eog.ui]
+disable-close-confirmation=true
+
