@@ -1,6 +1,5 @@
 # kali essential
 kali-archive-keyring
-sudo
 
 # kali desktop
 #if ARCHITECTURES i386 amd64
