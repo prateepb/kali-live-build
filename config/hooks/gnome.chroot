@@ -8,6 +8,7 @@ if (/usr/bin/which gconftool-2); then
         gconftool-2 --type string -s /apps/gnome-terminal/profiles/Default/background_type transparent
         gconftool-2 --type float -s /apps/gnome-terminal/profiles/Default/background_darkness 0.75
         gconftool-2 --type bool -s /apps/gnome-terminal/global/confirm_window_close false
+	glib-compile-schemas /usr/share/glib-2.0/schemas
 else
   echo "[*] gconftool-2 not installed."
 fi
