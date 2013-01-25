@@ -17,6 +17,7 @@ kali-defaults
 	
 # kali packages
 kali-defaults
+#if ARCHITECTURES i386 amd64
 libcrafter
 jboss-autopwn
 u3-pwn
@@ -289,4 +290,4 @@ pack
 zaproxy
 oscanner
 ohrwurm
-
+#endif
