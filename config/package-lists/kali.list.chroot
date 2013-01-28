@@ -1,11 +1,15 @@
 # kali essential
 kali-archive-keyring
+parted
+vim
+tmux
 
 # kali desktop
 #if ARCHITECTURES i386 amd64
 gnome-core
 gnome-human-icon-theme
 kali-root-login
+gparted
 #endif
 #if ARCHITECTURES armel armhf
 xfce4
