@@ -48,6 +48,4 @@ for KALI_ARCH in $KALI_ARCHES; do
 	mv binary.log images/kali-$KALI_VERSION-$KALI_ARCH.log
 done
 
-cd images
-sha1sum *.${IMAGE_NAME##*.} >SHA1SUMS
-
+../bin/update-checksums images
