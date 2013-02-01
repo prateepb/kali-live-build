@@ -29,8 +29,15 @@ esac
 # Set sane PATH (cron seems to lack /sbin/ dirs)
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
-# XXX: Use a git checkout of live-build until we have a good version in wheezy
-export LIVE_BUILD=/srv/cdimage.kali.org/live/live-build
+# Either we use a git checkout of live-build
+# export LIVE_BUILD=/srv/cdimage.kali.org/live/live-build
+
+# Or we ensure we have proper version installed
+ver_live_build=$(dpkg-query -f '${Version}' -W live-build)
+if dpkg --compare-versions "$ver_live_build" lt 3.0~b6; then
+	echo "You need live-build (>= 3.0~b6), you have $ver_live_build" >&2
+	exit 1
+fi
 
 cd $(dirname $0)
 
