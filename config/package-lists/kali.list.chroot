@@ -12,6 +12,7 @@ gnome-human-icon-theme
 kali-root-login
 gparted
 #endif
+
 #if ARCHITECTURES armel armhf
 xfce4
 #endif
@@ -20,8 +21,6 @@ xfce4
 kali-menu
 kali-defaults
 	
-# kali packages
-kali-defaults
 #if ARCHITECTURES i386 amd64
 libcrafter
 jboss-autopwn
