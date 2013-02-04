@@ -31,5 +31,5 @@ lb config noauto \
 	--iso-publisher "Kali" \
 	--iso-volume "Kali Live" \
 	--linux-packages linux-image \
-	--bootappend-live "boot=live config live-config.username=root" \
+	--bootappend-live "boot=live config live-config.username=root hostname=kali" \
 	"$@"
