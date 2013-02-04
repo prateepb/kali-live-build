@@ -1,6 +1,5 @@
 # kali essential
 kali-archive-keyring
-debian-installer-launcher
 parted
 vim
 tmux
