@@ -8,9 +8,6 @@ HOST_ARCH="$(dpkg --print-architecture)"
 case "$HOST_ARCH" in
 	i386|amd64)
 		CONFIG_OPTS="--debian-installer live"
-		if [ "$KALI_ARCH" = "i386" ]; then
-			CONFIG_OPTS="$CONFIG_OPTS --linux-flavours 686-pae"
-		fi
 		KALI_ARCHES="amd64 i386"
 		IMAGE_NAME="binary.hybrid.iso"
 	;;
@@ -43,6 +40,9 @@ cd $(dirname $0)
 
 for KALI_ARCH in $KALI_ARCHES; do
 	lb clean --purge >prepare.log 2>&1
+	if [ "$KALI_ARCH" = "i386" ]; then
+		CONFIG_OPTS="$CONFIG_OPTS --linux-flavours 686-pae"
+	fi
 	lb config --architecture $KALI_ARCH $CONFIG_OPTS >>prepare.log 2>&1
 	lb build >/dev/null
 	if [ $? -ne 0 ] || [ ! -e $IMAGE_NAME ]; then
