@@ -23,6 +23,22 @@ case "$HOST_ARCH" in
 	;;
 esac
 
+# Parsing command line options
+temp=$(getopt -o s -l single -- "$@")
+eval set -- "$temp"
+while true; do
+	case "$1" in
+		-s|--single) OPT_single="1"; shift 1; ;;
+		--) shift; break; ;;
+		*) echo "ERROR: Invalid command-line option: $1" >&2; exit 1; ;;
+        esac
+done
+
+if [ -n "$OPT_single" ]; then
+	echo "Building a single arch ($HOST_ARCH)..."
+	KALI_ARCHES="$HOST_ARCH"
+fi
+
 # Set sane PATH (cron seems to lack /sbin/ dirs)
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
