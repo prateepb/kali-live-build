@@ -10,6 +10,9 @@ if [ ! -e /usr/share/live/build/data/debian-cd/kali ]; then
        exit 1
 fi
 
+kali_mirror=http://repo.kali.org/kali
+kalisec_mirror=http://repo.kali.org/security
+
 lb config noauto \
 	--distribution "kali" \
 	--debian-installer-distribution "kali" \
@@ -22,11 +25,11 @@ lb config noauto \
 	--source false \
 	--firmware-binary true \
 	--firmware-chroot true \
-	--mirror-bootstrap http://repo.kali.org/kali \
-	--mirror-debian-installer http://repo.kali.org/kali \
-	--mirror-chroot-security http://repo.kali.org/security \
-	--mirror-binary http://repo.kali.org/kali \
-	--mirror-binary-security http://repo.kali.org/security \
+	--mirror-bootstrap $kali_mirror \
+	--mirror-debian-installer $kali_mirror \
+	--mirror-chroot-security $kalisec_mirror \
+	--mirror-binary $kali_mirror \
+	--mirror-binary-security $kalisec_mirror \
 	--iso-application "Kali Linux" \
 	--iso-publisher "Kali" \
 	--iso-volume "Kali Live" \
