@@ -1,6 +1,0 @@
-# Install the kali kernel !
-d-i base-installer/kernel/image string linux-image-kali
-
-# Create root but skip creation of normal user account
-d-i passwd/root-login boolean true
-d-i passwd/make-user boolean false
