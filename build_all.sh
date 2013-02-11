@@ -7,13 +7,10 @@ KALI_VERSION="${VERSION:-daily}"
 HOST_ARCH="$(dpkg --print-architecture)"
 case "$HOST_ARCH" in
 	i386|amd64)
-		CONFIG_OPTS="--debian-installer live"
 		KALI_ARCHES="amd64 i386"
 		IMAGE_NAME="binary.hybrid.iso"
 	;;
 	armel|armhf)
-		# Can only generate images for the host arch
-		CONFIG_OPTS="--binary-images hdd"
 		KALI_ARCHES="$HOST_ARCH"
 		IMAGE_NAME="binary.img"
 	;;
@@ -56,10 +53,7 @@ cd $(dirname $0)
 
 for KALI_ARCH in $KALI_ARCHES; do
 	lb clean --purge >prepare.log 2>&1
-	if [ "$KALI_ARCH" = "i386" ]; then
-		CONFIG_OPTS="$CONFIG_OPTS --linux-flavours 686-pae"
-	fi
-	lb config --architecture $KALI_ARCH $CONFIG_OPTS >>prepare.log 2>&1
+	lb config -a $KALI_ARCH >>prepare.log 2>&1
 	lb build >/dev/null
 	if [ $? -ne 0 ] || [ ! -e $IMAGE_NAME ]; then
 		echo "Build of $KALI_ARCH live image failed" >&2
@@ -67,6 +61,7 @@ for KALI_ARCH in $KALI_ARCHES; do
 		tail -n 50 binary.log >&2
 		exit 1
 	fi
+	[ -d images ] || mkdir images
 	mv $IMAGE_NAME images/kali-$KALI_VERSION-$KALI_ARCH.${IMAGE_NAME##*.}
 	mv binary.log images/kali-$KALI_VERSION-$KALI_ARCH.log
 done

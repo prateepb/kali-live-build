@@ -1,6 +1,11 @@
 #!/bin/sh
 
-# Various comments
+# You can put local mirrors here if you want
+kali_mirror=http://archive.kali.org/kali
+kalisec_mirror=http://archive.kali.org/kali-security
+
+### DO NOT EDIT THE REST OF THIS FILE ###
+
 # live-build doesn't work if --parent-debian-distribution is unknown of
 # debian-cd => we have to put a symlink so that it deals with kali like wheezy
 
@@ -10,8 +15,36 @@ if [ ! -e /usr/share/live/build/data/debian-cd/kali ]; then
        exit 1
 fi
 
-kali_mirror=http://repo.kali.org/kali
-kalisec_mirror=http://repo.kali.org/security
+# Detect target architecture
+find_arch() {
+    while [ -n "$1" ]; do
+        case "$1" in
+            -a|--arch|--architecture|--architectures)
+                echo "$2"
+                return
+            ;;
+        esac
+        shift
+    done
+    dpkg --print-architecture
+}
+arch=$(find_arch "$@")
+
+case "$arch" in
+    amd64)
+	lb_opts="--debian-installer live"
+    ;;
+    i386)
+	lb_opts="--debian-installer live --linux-flavours 686-pae"
+    ;;
+    armel|armhf)
+	lb_opts="--binary-images hdd --chroot-filesystem ext4"
+    ;;
+    *)
+	echo "WARNING: configuration not tested on arch $arch" >&2
+	lb_opts=""
+    ;;
+esac
 
 lb config noauto \
 	--distribution "kali" \
@@ -35,4 +68,5 @@ lb config noauto \
 	--iso-volume "Kali Live" \
 	--linux-packages linux-image \
 	--bootappend-live "boot=live config live-config.username=root hostname=kali" \
+	$lb_opts \
 	"$@"
