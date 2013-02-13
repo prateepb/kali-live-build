@@ -38,7 +38,7 @@ case "$arch" in
 	lb_opts="--debian-installer live --linux-flavours 686-pae"
     ;;
     armel|armhf)
-	lb_opts="--binary-images hdd --chroot-filesystem ext4"
+	lb_opts="--binary-images hdd --binary-filesystem ext4 --chroot-filesystem none"
     ;;
     *)
 	echo "WARNING: configuration not tested on arch $arch" >&2
