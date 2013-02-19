@@ -1,5 +1,5 @@
 # kali meta-package depends on everything we want
-kali
+kali-linux
 
 # some tools that we always want
 parted
