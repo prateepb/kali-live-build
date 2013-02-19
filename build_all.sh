@@ -62,7 +62,13 @@ for KALI_ARCH in $KALI_ARCHES; do
 		exit 1
 	fi
 	[ -d images ] || mkdir images
-	mv $IMAGE_NAME images/kali-$KALI_VERSION-$KALI_ARCH.${IMAGE_NAME##*.}
+	if [ "$IMAGE_NAME" = "binary.img" ]; then
+		xz -6 $IMAGE_NAME
+		IMAGE_NAME="$IMAGE_NAME.xz"
+		IMAGE_EXT="img.xz"
+	fi
+	IMAGE_EXT="${IMAGE_EXT:-${IMAGE_NAME##*.}}"
+	mv $IMAGE_NAME images/kali-$KALI_VERSION-$KALI_ARCH.$IMAGE_EXT
 	mv binary.log images/kali-$KALI_VERSION-$KALI_ARCH.log
 done
 
