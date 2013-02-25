@@ -2,9 +2,34 @@
 kali-linux
 
 # some tools that we always want
+apache2
+bluez
+bluez-hcidump
+clang
+cowsay
+expect
+gdb
+git
+guymager
+iw
+mysql-server
+openvpn
+p7zip-full
 parted
-vim
+radare
+rdesktop
+screen
+sendemail
+suckless-tools
+sudo
+tcpdump
+tftp
+tightvncserver
 tmux
+unrar
+upx-ucl
+vim
+xpdf
 
 # Graphical desktops depending on the architecure
 #if ARCHITECTURES i386 amd64
