@@ -3,6 +3,7 @@
 set -e
 
 KALI_VERSION="${VERSION:-daily}"
+TARGET_DIR=$(dirname $0)/images/kali-$KALI_VERSION
 
 HOST_ARCH="$(dpkg --print-architecture)"
 case "$HOST_ARCH" in
@@ -50,6 +51,7 @@ if dpkg --compare-versions "$ver_live_build" lt 3.0~b6; then
 fi
 
 cd $(dirname $0)
+mkdir -p $TARGET_DIR
 
 for KALI_ARCH in $KALI_ARCHES; do
 	lb clean --purge >prepare.log 2>&1
@@ -68,8 +70,8 @@ for KALI_ARCH in $KALI_ARCHES; do
 		IMAGE_EXT="img.xz"
 	fi
 	IMAGE_EXT="${IMAGE_EXT:-${IMAGE_NAME##*.}}"
-	mv $IMAGE_NAME images/kali-$KALI_VERSION-$KALI_ARCH.$IMAGE_EXT
-	mv binary.log images/kali-$KALI_VERSION-$KALI_ARCH.log
+	mv $IMAGE_NAME $TARGET_DIR/kali-$KALI_VERSION-$KALI_ARCH.$IMAGE_EXT
+	mv binary.log $TARGET_DIR/kali-$KALI_VERSION-$KALI_ARCH.log
 done
 
-../bin/update-checksums images
+../bin/update-checksums $TARGET_DIR
