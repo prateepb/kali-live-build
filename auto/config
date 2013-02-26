@@ -46,6 +46,9 @@ case "$arch" in
     ;;
 esac
 
+public_kali_mirror=http://http.kali.org/kali
+public_kalisec_mirror=http://security.kali.org/kali-security
+
 lb config noauto \
 	--distribution "kali" \
 	--debian-installer-distribution "kali" \
@@ -61,8 +64,8 @@ lb config noauto \
 	--mirror-bootstrap $kali_mirror \
 	--mirror-debian-installer $kali_mirror \
 	--mirror-chroot-security $kalisec_mirror \
-	--mirror-binary $kali_mirror \
-	--mirror-binary-security $kalisec_mirror \
+	--mirror-binary $public_kali_mirror \
+	--mirror-binary-security $public_kalisec_mirror \
 	--iso-application "Kali Linux" \
 	--iso-publisher "Kali" \
 	--iso-volume "Kali Live" \
