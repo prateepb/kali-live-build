@@ -13,7 +13,9 @@ cowsay
 expect
 gdb
 git
+#if ARCHITECTURES i386 amd64
 guymager
+#endif
 iw
 mysql-server
 openvpn
