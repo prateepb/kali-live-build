@@ -1,6 +1,9 @@
 # kali meta-package depends on everything we want
 kali-linux
 
+# provide l10n for everybody
+locales-all
+
 # some tools that we always want
 apache2
 bluez
