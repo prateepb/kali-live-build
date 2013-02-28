@@ -9,28 +9,33 @@ apache2
 atftpd
 bluez
 bluez-hcidump
+#if ARCHITECTURES armel armhf
+cgpt
+#endif
 clang
 cowsay
 expect
 gdb
 git
-php5
-php5-mysql
-ncurses-hexedit
-snmp
-snmpd
+gparted
 #if ARCHITECTURES i386 amd64
 guymager
 #endif
 iw
 mysql-server
+ncurses-hexedit
 openvpn
 p7zip-full
 parted
+php5
+php5-mysql
+python-impacket
 radare2
 rdesktop
 screen
 sendemail
+snmp
+snmpd
 suckless-tools
 sudo
 tcpdump
@@ -41,19 +46,45 @@ unrar
 upx-ucl
 vim
 xpdf
-python-impacket
-# Graphical desktops depending on the architecure
-#if ARCHITECTURES i386 amd64
-gnome-core
-gnome-human-icon-theme
-gparted
-#endif
-
 #if ARCHITECTURES armel armhf
-xfce4
-network-manager-gnome
-network-manager
-cgpt
 vboot-utils
 vboot-kernel-utils
 #endif
+
+# Graphical desktops depending on the architecture
+#
+# You can replace all the remaining lines with a list of the
+# packages required to install your preferred graphical desktop
+# or you can just comment everything except the package of your
+# preferred desktop.
+
+#if ARCHITECTURES i386 amd64
+# *** GNOME DESKTOP ***
+gnome-core
+gnome-human-icon-theme
+#endif
+
+#if ARCHITECTURES armel armhf
+# *** XFCE DESKTOP ***
+xfce4
+network-manager-gnome
+network-manager
+#endif
+
+# *** KDE DESKTOP ***
+# kde-plasma-desktop
+
+# *** LXDE DESKTOP ***
+# lxde
+
+# *** Enlightenment DR17 DESKTOP ***
+# e17
+
+# *** MATE DESKTOP
+# | NOTE: The mate desktop requires other changes to the live config.
+# | See http://docs.kali.org/live-build/customize-the-kali-desktop-environment
+# | for details
+# xorg
+# mate-archive-keyring
+# mate-core
+# mate-desktop-environment
