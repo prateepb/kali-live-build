@@ -6,6 +6,7 @@ locales-all
 
 # some tools that we always want
 apache2
+atftpd
 bluez
 bluez-hcidump
 clang
@@ -13,6 +14,11 @@ cowsay
 expect
 gdb
 git
+php5
+php5-mysql
+ncurses-hexedit
+snmp
+snmpd
 #if ARCHITECTURES i386 amd64
 guymager
 #endif
