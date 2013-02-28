@@ -61,7 +61,6 @@ vboot-kernel-utils
 #if ARCHITECTURES i386 amd64
 # *** GNOME DESKTOP ***
 gnome-core
-gnome-human-icon-theme
 #endif
 
 #if ARCHITECTURES armel armhf
