@@ -41,7 +41,7 @@ unrar
 upx-ucl
 vim
 xpdf
-
+python-impacket
 # Graphical desktops depending on the architecure
 #if ARCHITECTURES i386 amd64
 gnome-core
