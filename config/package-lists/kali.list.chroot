@@ -21,6 +21,7 @@ gparted
 #if ARCHITECTURES i386 amd64
 guymager
 #endif
+flashplugin-nonfree
 iw
 mysql-server
 ncurses-hexedit
