@@ -31,6 +31,8 @@ parted
 php5
 php5-mysql
 python-impacket
+python-impacket-doc
+paros
 radare2
 rdesktop
 screen
