@@ -49,6 +49,8 @@ unrar
 upx-ucl
 vim
 xpdf
+leafpad
+vim-gtk
 #if ARCHITECTURES armel armhf
 vboot-utils
 vboot-kernel-utils
