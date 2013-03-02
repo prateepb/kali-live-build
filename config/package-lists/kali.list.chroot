@@ -66,6 +66,8 @@ vboot-kernel-utils
 #if ARCHITECTURES i386 amd64
 # *** GNOME DESKTOP ***
 gnome-core
+gnome-brave-icon-theme
+gnome-shell-extensions
 #endif
 
 #if ARCHITECTURES armel armhf
