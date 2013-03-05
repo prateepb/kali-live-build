@@ -79,6 +79,7 @@ network-manager
 
 # *** KDE DESKTOP ***
 # kde-plasma-desktop
+# kdm
 
 # *** LXDE DESKTOP ***
 # lxde
