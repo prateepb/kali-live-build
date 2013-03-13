@@ -52,6 +52,7 @@ xpdf
 leafpad
 vim-gtk
 xtightvncviewer
+zenmap
 #if ARCHITECTURES armel armhf
 vboot-utils
 vboot-kernel-utils
