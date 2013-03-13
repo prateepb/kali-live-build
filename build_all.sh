@@ -69,4 +69,6 @@ for KALI_ARCH in $KALI_ARCHES; do
 	mv binary.log $TARGET_DIR/kali-$KALI_VERSION-$KALI_ARCH.log
 done
 
-../bin/update-checksums $TARGET_DIR
+if [ -x ../bin/update-checksums ]; then
+	../bin/update-checksums $TARGET_DIR
+fi
