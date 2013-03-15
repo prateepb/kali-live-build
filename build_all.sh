@@ -22,11 +22,12 @@ case "$HOST_ARCH" in
 esac
 
 # Parsing command line options
-temp=$(getopt -o s -l single -- "$@")
+temp=$(getopt -o sp -l single,proposed-updates -- "$@")
 eval set -- "$temp"
 while true; do
 	case "$1" in
 		-s|--single) OPT_single="1"; shift 1; ;;
+		-p|--proposed-updates) OPT_pu="1"; shift 1; ;;
 		--) shift; break; ;;
 		*) echo "ERROR: Invalid command-line option: $1" >&2; exit 1; ;;
         esac
@@ -35,6 +36,11 @@ done
 if [ -n "$OPT_single" ]; then
 	echo "Building a single arch ($HOST_ARCH)..."
 	KALI_ARCHES="$HOST_ARCH"
+fi
+
+if [ -n "$OPT_pu" ]; then
+	echo "Integrating proposed-updates in the image"
+	KALI_CONFIG_OPTS="-- --proposed-updates"
 fi
 
 # Set sane PATH (cron seems to lack /sbin/ dirs)
@@ -55,7 +61,7 @@ mkdir -p $TARGET_DIR
 
 for KALI_ARCH in $KALI_ARCHES; do
 	lb clean --purge >prepare.log 2>&1
-	lb config -a $KALI_ARCH >>prepare.log 2>&1
+	lb config -a $KALI_ARCH $KALI_CONFIG_OPTS >>prepare.log 2>&1
 	lb build >/dev/null
 	if [ $? -ne 0 ] || [ ! -e $IMAGE_NAME ]; then
 		echo "Build of $KALI_ARCH live image failed" >&2

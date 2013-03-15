@@ -15,20 +15,30 @@ if [ ! -e /usr/share/live/build/data/debian-cd/kali ]; then
        exit 1
 fi
 
-# Detect target architecture
-find_arch() {
-    while [ -n "$1" ]; do
-        case "$1" in
-            -a|--arch|--architecture|--architectures)
-                echo "$2"
-                return
-            ;;
-        esac
-        shift
-    done
-    dpkg --print-architecture
-}
-arch=$(find_arch "$@")
+public_kali_mirror=http://http.kali.org/kali
+public_kalisec_mirror=http://security.kali.org/kali-security
+
+# Detect target architecture and filter args
+temp=""
+while [ $# -gt 0 ]; do
+   	arg="$1"
+	case "$arg" in
+        -a|--arch|--architecture|--architectures)
+		arch="$2"
+		temp="$temp "'"'"$arg"'"'
+		temp="$temp "'"'"$2"'"'
+		shift
+		;;
+	--proposed-updates)
+		enable_pu="1"
+		;;
+	*)
+		temp="$temp "'"'"$arg"'"'
+		;;
+	esac
+	shift
+done
+eval set -- "$temp"
 
 case "$arch" in
     amd64)
@@ -46,8 +56,14 @@ case "$arch" in
     ;;
 esac
 
-public_kali_mirror=http://http.kali.org/kali
-public_kalisec_mirror=http://security.kali.org/kali-security
+rm -f config/archives/kali-proposed-updates.list.*
+if [ -n "$enable_pu" ]; then
+	mkdir -p config/archives
+	echo "deb $kali_mirror kali-proposed-updates main contrib non-free" \
+		> config/archives/kali-proposed-updates.list.chroot
+	echo "deb $kali_public_mirror kali-proposed-updates main contrib non-free" \
+		> config/archives/kali-proposed-updates.list.binary
+fi
 
 lb config noauto \
 	--distribution "kali" \
