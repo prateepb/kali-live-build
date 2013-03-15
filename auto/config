@@ -61,7 +61,7 @@ if [ -n "$enable_pu" ]; then
 	mkdir -p config/archives
 	echo "deb $kali_mirror kali-proposed-updates main contrib non-free" \
 		> config/archives/kali-proposed-updates.list.chroot
-	echo "deb $kali_public_mirror kali-proposed-updates main contrib non-free" \
+	echo "deb $public_kali_mirror kali-proposed-updates main contrib non-free" \
 		> config/archives/kali-proposed-updates.list.binary
 fi
 
