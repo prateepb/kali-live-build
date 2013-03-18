@@ -15,12 +15,15 @@ cgpt
 clang
 cowsay
 desktop-base
+ethtool
 expect
 gdb
 git
 gparted
 #if ARCHITECTURES i386 amd64
 guymager
+b43-fwcutter
+firmware-b43-installer
 #endif
 iw
 mysql-server
