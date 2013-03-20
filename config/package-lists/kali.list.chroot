@@ -1,5 +1,5 @@
 # kali meta-package depends on everything we want
-kali-linux
+kali-linux-all
 
 # provide l10n for everybody
 locales-all
