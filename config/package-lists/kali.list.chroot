@@ -4,6 +4,13 @@ kali-linux-full
 # provide l10n for everybody
 locales-all
 
+# Updates tools which have yet to be added to kali-linux meta
+lbd
+arachni
+bully
+uniscan
+automater
+
 # some tools that we always want
 apache2
 atftpd
