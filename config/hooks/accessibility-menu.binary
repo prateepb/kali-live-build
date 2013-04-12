@@ -1,0 +1,11 @@
+#!/bin/sh
+
+cat >>binary/isolinux/install.cfg <<END
+
+label installspk
+	menu label Install with ^speech synthesis
+	linux /install/gtk/vmlinuz
+	initrd /install/gtk/initrd.gz
+	append video=vesa:ywrap,mtrr vga=788 speakup.synth=soft -- quiet
+END
+
