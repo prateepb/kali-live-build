@@ -21,18 +21,23 @@ cgpt
 #endif
 clang
 cowsay
+cryptsetup
 desktop-base
 ethtool
 expect
+#if ARCHITECTURES i386 amd64
+firmware-b43legacy-installer 
+firmware-b43-installer
+#endif
 gdb
 git
 gparted
 #if ARCHITECTURES i386 amd64
 guymager
-firmware-b43legacy-installer 
-firmware-b43-installer
 #endif
 iw
+leafpad
+lvm2
 mysql-server
 ncurses-hexedit
 openvpn
@@ -57,16 +62,15 @@ tightvncserver
 tmux
 unrar
 upx-ucl
-vim
-xpdf
-leafpad
-vim-gtk
-xtightvncviewer
-zenmap
 #if ARCHITECTURES armel armhf
 vboot-utils
 vboot-kernel-utils
 #endif
+vim
+vim-gtk
+xpdf
+xtightvncviewer
+zenmap
 
 # Graphical desktops depending on the architecture
 #
@@ -80,6 +84,7 @@ vboot-kernel-utils
 gnome-core
 gnome-brave-icon-theme
 gnome-shell-extensions
+gnome-orca
 #endif
 
 #if ARCHITECTURES armel armhf
