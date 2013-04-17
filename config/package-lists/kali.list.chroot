@@ -1,5 +1,11 @@
 # kali meta-package depends on everything we want
 kali-linux-full
+kali-root-login
+kali-defaults
+kali-menu
+kali-debtags
+kali-archive-keyring
+debian-installer-launcher
 
 # provide l10n for everybody
 locales-all
