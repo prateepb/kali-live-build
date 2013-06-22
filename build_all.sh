@@ -22,12 +22,13 @@ case "$HOST_ARCH" in
 esac
 
 # Parsing command line options
-temp=$(getopt -o sp -l single,proposed-updates -- "$@")
+temp=$(getopt -o spd -l single,proposed-updates,kali-dev -- "$@")
 eval set -- "$temp"
 while true; do
 	case "$1" in
 		-s|--single) OPT_single="1"; shift 1; ;;
 		-p|--proposed-updates) OPT_pu="1"; shift 1; ;;
+		-d|--kali-dev) OPT_kali_dev="1"; shift 1; ;;
 		--) shift; break; ;;
 		*) echo "ERROR: Invalid command-line option: $1" >&2; exit 1; ;;
         esac
@@ -38,9 +39,17 @@ if [ -n "$OPT_single" ]; then
 	KALI_ARCHES="$HOST_ARCH"
 fi
 
+KALI_CONFIG_OPTS="--"
+if [ -n "$OPT_kali_dev" ]; then
+	echo "Using kali-dev as the base distribution"
+	KALI_CONFIG_OPTS="$KALI_CONFIG_OPTS --kali-dev"
+	if [ "$KALI_VERSION" = "daily" ]; then
+		KALI_VERSION="dev"
+	fi
+fi
 if [ -n "$OPT_pu" ]; then
 	echo "Integrating proposed-updates in the image"
-	KALI_CONFIG_OPTS="-- --proposed-updates"
+	KALI_CONFIG_OPTS="$KALI_CONFIG_OPTS --proposed-updates"
 fi
 
 # Set sane PATH (cron seems to lack /sbin/ dirs)
