@@ -10,7 +10,12 @@ debian-installer-launcher
 # provide l10n for everybody
 locales-all
 
+# default packages we always want
+vlan
+rfkill
+
 # Updates tools which have yet to be added to kali-linux meta
+passing-the-hash
 lbd
 arachni
 bully
