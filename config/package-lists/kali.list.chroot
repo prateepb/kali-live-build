@@ -16,11 +16,15 @@ rfkill
 
 # Updates tools which have yet to be added to kali-linux meta
 passing-the-hash
+rfcat
+ubertooth
+python-rfidiot
 lbd
 arachni
 bully
 uniscan
 automater
+unicornscan
 
 # some tools that we always want
 apache2
