@@ -80,8 +80,8 @@ for KALI_ARCH in $KALI_ARCHES; do
 	fi
 	[ -d images ] || mkdir images
 	IMAGE_EXT="${IMAGE_EXT:-${IMAGE_NAME##*.}}"
-	mv $IMAGE_NAME $TARGET_DIR/kali-$KALI_VERSION-$KALI_ARCH.$IMAGE_EXT
-	mv binary.log $TARGET_DIR/kali-$KALI_VERSION-$KALI_ARCH.log
+	mv $IMAGE_NAME $TARGET_DIR/kali-linux-$KALI_VERSION-$KALI_ARCH.$IMAGE_EXT
+	mv binary.log $TARGET_DIR/kali-linux-$KALI_VERSION-$KALI_ARCH.log
 done
 
 if [ -x ../bin/update-checksums ]; then
