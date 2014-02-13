@@ -6,6 +6,7 @@ kali-menu
 kali-debtags
 kali-archive-keyring
 debian-installer-launcher
+alsa-tools
 
 # provide l10n for everybody
 locales-all
