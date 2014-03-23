@@ -35,6 +35,7 @@ guymager
 gnome-core
 gnome-brave-icon-theme
 gnome-shell-extensions
+nautilus-open-terminal
 gnome-orca
 #endif
 
