@@ -96,8 +96,6 @@ lb config noauto \
 	--iso-publisher "Kali" \
 	--iso-volume "Kali Live" \
 	--linux-packages linux-image \
-#	Encrypted persistence support
-#	--bootappend-live "boot=live noconfig=sudo username=root hostname=kali persistent=cryptsetup persistence-encryption=luks persistence" \
-       --bootappend-live "boot=live noconfig=sudo username=root hostname=kali" \
+	--bootappend-live "boot=live noconfig=sudo username=root hostname=kali" \
 	$lb_opts \
 	"$@"
