@@ -22,13 +22,14 @@ case "$HOST_ARCH" in
 esac
 
 # Parsing command line options
-temp=$(getopt -o spd -l single,proposed-updates,kali-dev -- "$@")
+temp=$(getopt -o spdr -l single,proposed-updates,kali-dev,kali-rolling -- "$@")
 eval set -- "$temp"
 while true; do
 	case "$1" in
 		-s|--single) OPT_single="1"; shift 1; ;;
 		-p|--proposed-updates) OPT_pu="1"; shift 1; ;;
 		-d|--kali-dev) OPT_kali_dev="1"; shift 1; ;;
+		-r|--kali-rolling) OPT_kali_rolling="1"; shift 1; ;;
 		--) shift; break; ;;
 		*) echo "ERROR: Invalid command-line option: $1" >&2; exit 1; ;;
         esac
@@ -40,7 +41,13 @@ if [ -n "$OPT_single" ]; then
 fi
 
 KALI_CONFIG_OPTS="--"
-if [ -n "$OPT_kali_dev" ]; then
+if [ -n "$OPT_kali_rolling" ]; then
+	echo "Using kali-rolling as the base distribution"
+	KALI_CONFIG_OPTS="$KALI_CONFIG_OPTS --kali-rolling"
+	if [ "$KALI_VERSION" = "daily" ]; then
+		KALI_VERSION="rolling"
+	fi
+elif [ -n "$OPT_kali_dev" ]; then
 	echo "Using kali-dev as the base distribution"
 	KALI_CONFIG_OPTS="$KALI_CONFIG_OPTS --kali-dev"
 	if [ "$KALI_VERSION" = "daily" ]; then

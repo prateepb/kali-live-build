@@ -31,6 +31,9 @@ while [ $# -gt 0 ]; do
 		# No security repo
 		lb_opts="--security false"
 		;;
+	--kali-rolling)
+		dist="kali-rolling"
+		;;
 	*)
 		temp="$temp "'"'"$arg"'"'
 		;;
