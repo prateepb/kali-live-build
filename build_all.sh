@@ -2,6 +2,7 @@
 
 set -e
 
+KALI_DIST=kali
 KALI_VERSION="${VERSION:-daily}"
 TARGET_DIR=$(dirname $0)/images/kali-$KALI_VERSION
 
@@ -47,16 +48,19 @@ if [ -n "$OPT_kali_rolling" ]; then
 	if [ "$KALI_VERSION" = "daily" ]; then
 		KALI_VERSION="rolling"
 	fi
+	KALI_DIST="kali-rolling"
 elif [ -n "$OPT_kali_dev" ]; then
 	echo "Using kali-dev as the base distribution"
 	KALI_CONFIG_OPTS="$KALI_CONFIG_OPTS --kali-dev"
 	if [ "$KALI_VERSION" = "daily" ]; then
 		KALI_VERSION="dev"
 	fi
+	KALI_DIST="kali-dev"
 fi
 if [ -n "$OPT_pu" ]; then
 	echo "Integrating proposed-updates in the image"
 	KALI_CONFIG_OPTS="$KALI_CONFIG_OPTS --proposed-updates"
+	KALI_DIST="$KALI_DIST+pu"
 fi
 
 # Set sane PATH (cron seems to lack /sbin/ dirs)
@@ -80,7 +84,7 @@ for KALI_ARCH in $KALI_ARCHES; do
 	lb config -a $KALI_ARCH $KALI_CONFIG_OPTS >>prepare.log 2>&1
 	lb build >/dev/null
 	if [ $? -ne 0 ] || [ ! -e $IMAGE_NAME ]; then
-		echo "Build of $KALI_ARCH live image failed" >&2
+		echo "Build of $KALI_DIST/$KALI_ARCH live image failed" >&2
 		echo "Last 50 lines of the log:" >&2
 		tail -n 50 binary.log >&2
 		exit 1
