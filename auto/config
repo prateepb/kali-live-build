@@ -45,12 +45,12 @@ eval set -- "$temp"
 
 # live-build doesn't work if --parent-debian-distribution is unknown of
 # debian-cd => we have to put a symlink so that it deals with kali like wheezy
-if [ ! -e ${LIVE_BUILD:-/usr/share/live/build}/data/debian-cd/kali ]; then
+if [ ! -e ${LIVE_BUILD:-/usr/share/live/build}/data/debian-cd/$dist ]; then
 	if [ -w ${LIVE_BUILD:-/usr/share/live/build}/data/debian-cd ]; then
-		ln -sf wheezy ${LIVE_BUILD:-/usr/share/live/build}/data/debian-cd/kali
+		ln -sf wheezy ${LIVE_BUILD:-/usr/share/live/build}/data/debian-cd/$dist
 	else
 		echo "ERROR: Run this first:"
-		echo "ln -sf wheezy ${LIVE_BUILD:-/usr/share/live/build}/data/debian-cd/kali"
+		echo "ln -sf wheezy ${LIVE_BUILD:-/usr/share/live/build}/data/debian-cd/$dist"
 		exit 1
 	fi
 fi
