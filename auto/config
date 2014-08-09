@@ -29,10 +29,11 @@ while [ $# -gt 0 ]; do
 	--kali-dev)
 		dist="kali-dev"
 		# No security repo
-		lb_opts="--security false"
+		lb_opts="--security false --initsystem systemd"
 		;;
 	--kali-rolling)
 		dist="kali-rolling"
+		lb_opts="--initsystem systemd"
 		;;
 	*)
 		temp="$temp "'"'"$arg"'"'
