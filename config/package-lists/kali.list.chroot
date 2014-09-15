@@ -28,6 +28,16 @@ firmware-b43-installer
 guymager
 #endif
 
+# EFI support
+#if ARCHITECTURES i386
+grub-efi
+grub-efi-ia32
+#endif
+#if ARCHITECTURES amd64
+grub-efi
+grub-efi-amd64
+#endif
+
 # Graphical desktops depending on the architecture
 #
 # You can replace all the remaining lines with a list of the
