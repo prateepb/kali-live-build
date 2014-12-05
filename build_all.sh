@@ -10,11 +10,11 @@ HOST_ARCH="$(dpkg --print-architecture)"
 case "$HOST_ARCH" in
 	i386|amd64)
 		KALI_ARCHES="amd64 i386"
-		IMAGE_NAME="binary.hybrid.iso"
+		IMAGE_TEMPLATE="live-image-ARCH.hybrid.iso"
 	;;
 	armel|armhf)
 		KALI_ARCHES="$HOST_ARCH"
-		IMAGE_NAME="binary.img"
+		IMAGE_TEMPLATE="live-image-ARCH.img"
 	;;
 	*)
 		echo "ERROR: $HOST_ARCH build is not supported"
@@ -71,8 +71,8 @@ export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 # Or we ensure we have proper version installed
 ver_live_build=$(dpkg-query -f '${Version}' -W live-build)
-if dpkg --compare-versions "$ver_live_build" lt 3.0.5-1kali7; then
-	echo "You need live-build (>= 3.0.5-1kali7), you have $ver_live_build" >&2
+if dpkg --compare-versions "$ver_live_build" lt 4.0.3-1kali2; then
+	echo "You need live-build (>= 4.0.3-1kali2), you have $ver_live_build" >&2
 	exit 1
 fi
 
@@ -80,6 +80,7 @@ cd $(dirname $0)
 mkdir -p $TARGET_DIR
 
 for KALI_ARCH in $KALI_ARCHES; do
+	IMAGE_NAME=$(echo $IMAGE_TEMPLATE | sed -e "s/ARCH/$KALI_ARCH/")
 	lb clean --purge >prepare.log 2>&1
 	lb config -a $KALI_ARCH $KALI_CONFIG_OPTS >>prepare.log 2>&1
 	lb build >/dev/null

@@ -16,13 +16,13 @@ kbd
 console-data
 console-common
 
-#if ARCHITECTURES armel armhf
+#if ARCHITECTURE armel armhf
 cgpt
 vboot-utils
 vboot-kernel-utils
 #endif
 
-#if ARCHITECTURES i386 amd64
+#if ARCHITECTURE i386 amd64
 firmware-b43legacy-installer 
 firmware-b43-installer
 guymager
@@ -35,7 +35,7 @@ guymager
 # or you can just comment everything except the package of your
 # preferred desktop.
 
-#if ARCHITECTURES i386 amd64
+#if ARCHITECTURE i386 amd64
 # *** GNOME DESKTOP ***
 gnome-core
 gnome-brave-icon-theme
@@ -44,7 +44,7 @@ nautilus-open-terminal
 gnome-orca
 #endif
 
-#if ARCHITECTURES armel armhf
+#if ARCHITECTURE armel armhf
 # *** XFCE DESKTOP ***
 xfce4
 network-manager-gnome
