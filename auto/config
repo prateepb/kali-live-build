@@ -103,3 +103,8 @@ lb config noauto \
 	--bootappend-live "boot=live noconfig=sudo username=root hostname=kali" \
 	$lb_opts \
 	"$@"
+
+if [ $dist = kali ]; then
+	# Don' use systemd for now
+	sed -i -e 's/systemd/sysvinit/' config/package-lists/live.list.chroot
+fi
