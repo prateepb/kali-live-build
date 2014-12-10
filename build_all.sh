@@ -14,7 +14,8 @@ case "$HOST_ARCH" in
 	;;
 	armel|armhf)
 		KALI_ARCHES="$HOST_ARCH"
-		IMAGE_TEMPLATE="live-image-ARCH.img"
+		IMAGE_TEMPLATE="live-image-ARCH"
+		IMAGE_EXT="img"
 	;;
 	*)
 		echo "ERROR: $HOST_ARCH build is not supported"
