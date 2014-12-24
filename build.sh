@@ -21,6 +21,15 @@ image_name() {
 	echo $IMAGE_TEMPLATE | sed -e "s/ARCH/$arch/"
 }
 
+failure() {
+	local logfile=$1
+
+	echo "Build of $KALI_DIST/$KALI_ARCH live image failed" >&2
+	echo "Last 50 lines of $logfile:" >&2
+	tail -n 50 $logfile >&2
+	exit 2
+}
+
 # Parsing command line options
 temp=$(getopt -o spdra: -l single,proposed-updates,kali-dev,kali-rolling,arch: -- "$@")
 eval set -- "$temp"
@@ -107,15 +116,16 @@ mkdir -p $TARGET_DIR
 
 for KALI_ARCH in $KALI_ARCHES; do
 	IMAGE_NAME="$(image_name $KALI_ARCH)"
+	set +e
 	$SUDO lb clean --purge >prepare.log 2>&1
+	[ $? -eq 0 ] || failure prepare.log
 	lb config -a $KALI_ARCH $KALI_CONFIG_OPTS >>prepare.log 2>&1
+	[ $? -eq 0 ] || failure prepare.log
 	$SUDO lb build >/dev/null
 	if [ $? -ne 0 ] || [ ! -e $IMAGE_NAME ]; then
-		echo "Build of $KALI_DIST/$KALI_ARCH live image failed" >&2
-		echo "Last 50 lines of the log:" >&2
-		tail -n 50 binary.log >&2
-		exit 1
+		failure binary.log
 	fi
+	set -e
 	IMAGE_EXT="${IMAGE_NAME##*.}"
 	IMAGE_EXT="${IMAGE_EXT:-img}"
 	mv $IMAGE_NAME $TARGET_DIR/kali-linux-$KALI_VERSION-$KALI_ARCH.$IMAGE_EXT
