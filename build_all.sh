@@ -5,6 +5,16 @@ set -e
 KALI_DIST=kali
 KALI_VERSION="${VERSION:-daily}"
 TARGET_DIR=$(dirname $0)/images/kali-$KALI_VERSION
+SUDO=""
+
+# We need root rights at some point
+if [ "$(whoami)" != "root" ]; then
+    if ! which sudo >/dev/null; then
+	echo "ERROR: $0 is not run as root and sudo is not available"
+	exit 1
+    fi
+    SUDO=sudo
+fi
 
 HOST_ARCH="$(dpkg --print-architecture)"
 case "$HOST_ARCH" in
@@ -82,9 +92,9 @@ mkdir -p $TARGET_DIR
 
 for KALI_ARCH in $KALI_ARCHES; do
 	IMAGE_NAME=$(echo $IMAGE_TEMPLATE | sed -e "s/ARCH/$KALI_ARCH/")
-	lb clean --purge >prepare.log 2>&1
+	$SUDO lb clean --purge >prepare.log 2>&1
 	lb config -a $KALI_ARCH $KALI_CONFIG_OPTS >>prepare.log 2>&1
-	lb build >/dev/null
+	$SUDO lb build >/dev/null
 	if [ $? -ne 0 ] || [ ! -e $IMAGE_NAME ]; then
 		echo "Build of $KALI_DIST/$KALI_ARCH live image failed" >&2
 		echo "Last 50 lines of the log:" >&2
