@@ -96,8 +96,8 @@ export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 # Or we ensure we have proper version installed
 ver_live_build=$(dpkg-query -f '${Version}' -W live-build)
-if dpkg --compare-versions "$ver_live_build" lt 4.0.3-1kali2; then
-	echo "You need live-build (>= 4.0.3-1kali2), you have $ver_live_build" >&2
+if dpkg --compare-versions "$ver_live_build" lt 4.0.4-1kali2; then
+	echo "You need live-build (>= 4.0.4-1kali2), you have $ver_live_build" >&2
 	exit 1
 fi
 
