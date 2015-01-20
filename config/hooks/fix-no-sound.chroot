@@ -1,7 +1,6 @@
 #!/bin/sh
 
 $FILE="/etc/default/pulseaudio"
-set -e
 if [ -f $FILE ];
 then
 	echo "Setting PULSEAUDIO_SYSTEM_START=1"
