@@ -8,6 +8,7 @@ kali-archive-keyring
 debian-installer-launcher
 alsa-tools
 cryptsetup
+file-roller
 
 # provide l10n for everybody
 locales-all
