@@ -6,6 +6,7 @@ KALI_DIST=kali
 KALI_VERSION="${VERSION:-daily}"
 TARGET_DIR=$(dirname $0)/images/kali-$KALI_VERSION
 SUDO="sudo"
+VERBOSE=""
 
 image_name() {
 	local arch=$1
@@ -22,16 +23,24 @@ image_name() {
 }
 
 failure() {
-	local logfile=$1
-
 	echo "Build of $KALI_DIST/$KALI_ARCH live image failed" >&2
-	echo "Last 50 lines of $logfile:" >&2
-	tail -n 50 $logfile >&2
+	if [ -n "$VERBOSE" ]; then
+		echo "Last 100 lines of build.log:" >&2
+		tail -n 100 build.log >&2
+	fi
 	exit 2
 }
 
+run_and_log() {
+	if [ -n "$VERBOSE" ]; then
+		"$@" 2>&1 | tee -a build.log
+	else
+		"$@" >>build.log 2>&1
+	fi
+}
+
 # Parsing command line options
-temp=$(getopt -o spdra: -l single,proposed-updates,kali-dev,kali-rolling,arch: -- "$@")
+temp=$(getopt -o spdrva: -l single,proposed-updates,kali-dev,kali-rolling,verbose,arch: -- "$@")
 eval set -- "$temp"
 while true; do
 	case "$1" in
@@ -40,6 +49,7 @@ while true; do
 		-d|--kali-dev) OPT_kali_dev="1"; shift 1; ;;
 		-r|--kali-rolling) OPT_kali_rolling="1"; shift 1; ;;
 		-a|--arch) KALI_ARCHES="${KALI_ARCHES:+$KALI_ARCHES } $2"; shift 2; ;;
+		-v|--verbose) VERBOSE="1"; shift 1; ;;
 		--) shift; break; ;;
 		*) echo "ERROR: Invalid command-line option: $1" >&2; exit 1; ;;
         esac
@@ -117,19 +127,20 @@ mkdir -p $TARGET_DIR
 for KALI_ARCH in $KALI_ARCHES; do
 	IMAGE_NAME="$(image_name $KALI_ARCH)"
 	set +e
-	$SUDO lb clean --purge >prepare.log 2>&1
-	[ $? -eq 0 ] || failure prepare.log
-	lb config -a $KALI_ARCH $KALI_CONFIG_OPTS >>prepare.log 2>&1
-	[ $? -eq 0 ] || failure prepare.log
-	$SUDO lb build >/dev/null
+	: > build.log
+	run_and_log $SUDO lb clean --purge
+	[ $? -eq 0 ] || failure
+	run_and_log lb config -a $KALI_ARCH $KALI_CONFIG_OPTS
+	[ $? -eq 0 ] || failure
+	run_and_log $SUDO lb build
 	if [ $? -ne 0 ] || [ ! -e $IMAGE_NAME ]; then
-		failure binary.log
+		failure
 	fi
 	set -e
 	IMAGE_EXT="${IMAGE_NAME##*.}"
 	IMAGE_EXT="${IMAGE_EXT:-img}"
 	mv $IMAGE_NAME $TARGET_DIR/kali-linux-$KALI_VERSION-$KALI_ARCH.$IMAGE_EXT
-	mv binary.log $TARGET_DIR/kali-linux-$KALI_VERSION-$KALI_ARCH.log
+	mv build.log $TARGET_DIR/kali-linux-$KALI_VERSION-$KALI_ARCH.log
 done
 
 if [ -x ../bin/update-checksums ]; then

@@ -6,4 +6,4 @@
 # /usr/share/live/build/functions/releases.sh)
 export RELEASE_kali="7.0"
 
-lb build noauto "$@" 2>&1 | tee binary.log
+lb build noauto "$@"
