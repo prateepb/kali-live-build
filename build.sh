@@ -139,8 +139,8 @@ for KALI_ARCH in $KALI_ARCHES; do
 	set -e
 	IMAGE_EXT="${IMAGE_NAME##*.}"
 	IMAGE_EXT="${IMAGE_EXT:-img}"
-	mv $IMAGE_NAME $TARGET_DIR/kali-linux-$KALI_VERSION-$KALI_ARCH.$IMAGE_EXT
-	mv build.log $TARGET_DIR/kali-linux-$KALI_VERSION-$KALI_ARCH.log
+	mv -f $IMAGE_NAME $TARGET_DIR/kali-linux-$KALI_VERSION-$KALI_ARCH.$IMAGE_EXT
+	mv -f build.log $TARGET_DIR/kali-linux-$KALI_VERSION-$KALI_ARCH.log
 done
 
 if [ -x ../bin/update-checksums ]; then
