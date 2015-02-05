@@ -31,6 +31,8 @@ guymager
 
 # Extra Firmware
 zd1211-firmware
+firmware-linux
+firmware-netxen
 firmware-ralink
 firmware-realtek
 firmware-iwlwifi
