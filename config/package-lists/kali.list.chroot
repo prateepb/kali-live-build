@@ -1,35 +1,62 @@
-# kali meta-package depends on everything we want
+# You always want those
+kali-linux
+kali-desktop-live
+
+##
+## Kali applications
+##
+
+# You can customize the set of Kali applications to install
+# (-full is the default, -all is absolutely everything, the rest
+# corresponds to various subsets)
 kali-linux-full
-kali-root-login
-kali-defaults
-kali-menu
-kali-debtags
-kali-archive-keyring
-debian-installer-launcher
-alsa-tools
-cryptsetup
-file-roller
+# kali-linux-all
+# kali-linux-sdr
+# kali-linux-gpu
+# kali-linux-wireless
+# kali-linux-web
+# kali-linux-forensic
+# kali-linux-voip
+# kali-linux-pwtools
+# kali-linux-top10
+# kali-linux-rfid
 
-# provide l10n for everybody
-locales-all
-console-setup
-kbd
-console-data
-console-common
+##
+## Graphical desktop
+##
 
-#if ARCHITECTURES armel armhf
-cgpt
-vboot-utils
-vboot-kernel-utils
+# You can pick your preferred desktop here
+# (GNOME is the default on x86, xfce on arm*)
+#if ARCHITECTURES i386 amd64
+kali-desktop-gnome
 #endif
+#if ARCHITECTURES armel armhf
+kali-desktop-xfce
+#endif
+# kali-desktop-gnome
+# kali-desktop-xfce
+# kali-desktop-kde
+# kali-desktop-lxde
+# Or
+# *** Enlightenment DR17 DESKTOP ***
+# kali-desktop-common
+# e17
+# *** MATE DESKTOP
+# | NOTE: The mate desktop requires other changes to the live config.
+# | See http://docs.kali.org/live-build/customize-the-kali-desktop-environment
+# | for details
+# kali-desktop-common
+# xorg
+# mate-archive-keyring
+# mate-desktop-environment
 
+##
+## Add all known firmwares
+##
 #if ARCHITECTURES i386 amd64
 firmware-b43legacy-installer 
 firmware-b43-installer
-guymager
 #endif
-
-# Extra Firmware
 zd1211-firmware
 firmware-linux
 firmware-netxen
@@ -43,45 +70,3 @@ firmware-bnx2
 firmware-libertas
 bluez-firmware
 firmware-brcm80211
-
-# Graphical desktops depending on the architecture
-#
-# You can replace all the remaining lines with a list of the
-# packages required to install your preferred graphical desktop
-# or you can just comment everything except the package of your
-# preferred desktop.
-
-#if ARCHITECTURES i386 amd64
-# *** GNOME DESKTOP ***
-gnome-core
-gnome-brave-icon-theme
-gnome-shell-extensions
-nautilus-open-terminal
-gnome-orca
-#endif
-
-#if ARCHITECTURES armel armhf
-# *** XFCE DESKTOP ***
-xfce4
-network-manager-gnome
-network-manager
-#endif
-
-# *** KDE DESKTOP ***
-# kde-plasma-desktop
-# kdm
-
-# *** LXDE DESKTOP ***
-# lxde
-
-# *** Enlightenment DR17 DESKTOP ***
-# e17
-
-# *** MATE DESKTOP
-# | NOTE: The mate desktop requires other changes to the live config.
-# | See http://docs.kali.org/live-build/customize-the-kali-desktop-environment
-# | for details
-# xorg
-# mate-archive-keyring
-# mate-core
-# mate-desktop-environment
