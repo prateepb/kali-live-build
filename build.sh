@@ -1,6 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
+set -o pipefail  # Bashism
 
 KALI_DIST=kali
 KALI_VERSION="${VERSION:-daily}"
@@ -37,6 +38,7 @@ run_and_log() {
 	else
 		"$@" >>build.log 2>&1
 	fi
+	return $?
 }
 
 # Parsing command line options

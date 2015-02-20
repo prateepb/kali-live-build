@@ -23,15 +23,15 @@ while [ $# -gt 0 ]; do
 		temp="$temp "'"'"$2"'"'
 		shift
 		;;
-	--proposed-updates)
+	-p|--proposed-updates)
 		enable_pu="1"
 		;;
-	--kali-dev)
+	-d|--kali-dev)
 		dist="kali-dev"
 		# No security repo
 		lb_opts="--security false --initsystem systemd"
 		;;
-	--kali-rolling)
+	-r|--kali-rolling)
 		dist="kali-rolling"
 		lb_opts="--initsystem systemd"
 		;;
