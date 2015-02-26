@@ -85,6 +85,24 @@ if [ -n "$enable_pu" ]; then
 		> config/archives/kali-proposed-updates.list.binary
 fi
 
+if [ -e config/includes.installer/preseed.cfg ]; then
+	sed -i -e '/^# KALI OPTIONS/,$ d' config/includes.installer/preseed.cfg
+fi
+
+cat >>config/includes.installer/preseed.cfg <<END
+# KALI OPTIONS
+# Default repository information
+d-i mirror/country string enter information manually
+d-i mirror/suite string $dist
+d-i mirror/http/hostname string http.kali.org
+d-i mirror/http/directory string /kali
+
+# Add our own security mirror
+d-i apt-setup/local0/repository string http://security.kali.org/kali-security $dist/updates main contrib non-free
+d-i apt-setup/local0/comment string Security updates
+d-i apt-setup/local0/source boolean false
+END
+
 lb config noauto \
 	--distribution "$dist" \
 	--debian-installer-distribution "$dist" \
