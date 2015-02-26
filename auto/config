@@ -35,6 +35,9 @@ while [ $# -gt 0 ]; do
 		dist="kali-rolling"
 		lb_opts="--initsystem systemd"
 		;;
+	--)
+		shift
+		;;
 	*)
 		temp="$temp "'"'"$arg"'"'
 		;;

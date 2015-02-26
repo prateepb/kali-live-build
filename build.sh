@@ -136,7 +136,7 @@ for KALI_ARCH in $KALI_ARCHES; do
 	: > build.log
 	run_and_log $SUDO lb clean --purge
 	[ $? -eq 0 ] || failure
-	run_and_log lb config -a $KALI_ARCH $KALI_CONFIG_OPTS
+	run_and_log lb config -a $KALI_ARCH $KALI_CONFIG_OPTS "$@"
 	[ $? -eq 0 ] || failure
 	run_and_log $SUDO lb build
 	if [ $? -ne 0 ] || [ ! -e $IMAGE_NAME ]; then
