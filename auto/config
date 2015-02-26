@@ -36,7 +36,10 @@ while [ $# -gt 0 ]; do
 		lb_opts="--initsystem systemd"
 		;;
 	--)
-		shift
+		# Skip the separator, it was added so that "lb config"
+		# doesn't barf on our own options, but now we are
+		# filtering them away assuming that the remaining ones
+		# are intended for lb config !
 		;;
 	*)
 		temp="$temp "'"'"$arg"'"'
