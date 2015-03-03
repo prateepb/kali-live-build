@@ -5,7 +5,8 @@ set -o pipefail  # Bashism
 
 KALI_DIST=kali
 KALI_VERSION="${VERSION:-daily}"
-TARGET_DIR=$(dirname $0)/images/kali-$KALI_VERSION
+TARGET_DIR=$(dirname $0)/images
+TARGET_SUBDIR="kali-$KALI_VERSION"
 SUDO="sudo"
 VERBOSE=""
 
@@ -21,6 +22,17 @@ image_name() {
 		;;
 	esac
 	echo $IMAGE_TEMPLATE | sed -e "s/ARCH/$arch/"
+}
+
+target_image_name() {
+	local arch=$1
+
+	IMAGE_NAME="$(image_name $arch)"
+	IMAGE_EXT="${IMAGE_NAME##*.}"
+	if [ "$IMAGE_EXT" = "$IMAGE_NAME" ]; then
+		IMAGE_EXT="img"
+	fi
+	echo "$TARGET_SUBDIR/kali-linux-$KALI_VERSION-$KALI_ARCH.$IMAGE_EXT"
 }
 
 failure() {
@@ -42,7 +54,7 @@ run_and_log() {
 }
 
 # Parsing command line options
-temp=$(getopt -o spdrva: -l single,proposed-updates,kali-dev,kali-rolling,verbose,arch: -- "$@")
+temp=$(getopt -o spdrva: -l single,proposed-updates,kali-dev,kali-rolling,verbose,arch:,get-image-path -- "$@")
 eval set -- "$temp"
 while true; do
 	case "$1" in
@@ -52,6 +64,7 @@ while true; do
 		-r|--kali-rolling) OPT_kali_rolling="1"; shift 1; ;;
 		-a|--arch) KALI_ARCHES="${KALI_ARCHES:+$KALI_ARCHES } $2"; shift 2; ;;
 		-v|--verbose) VERBOSE="1"; shift 1; ;;
+		--get-image-path) ACTION="get-image-path"; shift 1; ;;
 		--) shift; break; ;;
 		*) echo "ERROR: Invalid command-line option: $1" >&2; exit 1; ;;
         esac
@@ -80,14 +93,12 @@ done
 
 KALI_CONFIG_OPTS="--"
 if [ -n "$OPT_kali_rolling" ]; then
-	echo "Using kali-rolling as the base distribution"
 	KALI_CONFIG_OPTS="$KALI_CONFIG_OPTS --kali-rolling"
 	if [ "$KALI_VERSION" = "daily" ]; then
 		KALI_VERSION="rolling"
 	fi
 	KALI_DIST="kali-rolling"
 elif [ -n "$OPT_kali_dev" ]; then
-	echo "Using kali-dev as the base distribution"
 	KALI_CONFIG_OPTS="$KALI_CONFIG_OPTS --kali-dev"
 	if [ "$KALI_VERSION" = "daily" ]; then
 		KALI_VERSION="dev"
@@ -95,7 +106,6 @@ elif [ -n "$OPT_kali_dev" ]; then
 	KALI_DIST="kali-dev"
 fi
 if [ -n "$OPT_pu" ]; then
-	echo "Integrating proposed-updates in the image"
 	KALI_CONFIG_OPTS="$KALI_CONFIG_OPTS --proposed-updates"
 	KALI_DIST="$KALI_DIST+pu"
 fi
@@ -127,8 +137,15 @@ else
 	SUDO="" # We're already root
 fi
 
+if [ "$ACTION" = "get-image-path" ]; then
+	for KALI_ARCH in $KALI_ARCHES; do
+		echo $(target_image_name $KALI_ARCH)
+	done
+	exit 0
+fi
+
 cd $(dirname $0)
-mkdir -p $TARGET_DIR
+mkdir -p $TARGET_DIR/$TARGET_SUBDIR
 
 for KALI_ARCH in $KALI_ARCHES; do
 	IMAGE_NAME="$(image_name $KALI_ARCH)"
@@ -143,14 +160,6 @@ for KALI_ARCH in $KALI_ARCHES; do
 		failure
 	fi
 	set -e
-	IMAGE_EXT="${IMAGE_NAME##*.}"
-	if [ "$IMAGE_EXT" = "$IMAGE_NAME" ]; then
-		IMAGE_EXT="img"
-	fi
-	mv -f $IMAGE_NAME $TARGET_DIR/kali-linux-$KALI_VERSION-$KALI_ARCH.$IMAGE_EXT
-	mv -f build.log $TARGET_DIR/kali-linux-$KALI_VERSION-$KALI_ARCH.log
+	mv -f $IMAGE_NAME $(target_image_name $KALI_ARCH)
+	mv -f build.log $TARGET_DIR/$TARGET_SUBDIR/kali-linux-$KALI_VERSION-$KALI_ARCH.log
 done
-
-if [ -x ../bin/update-checksums ]; then
-	../bin/update-checksums $TARGET_DIR
-fi
