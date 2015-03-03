@@ -35,6 +35,11 @@ target_image_name() {
 	echo "$TARGET_SUBDIR/kali-linux-$KALI_VERSION-$KALI_ARCH.$IMAGE_EXT"
 }
 
+target_build_log() {
+	TARGET_IMAGE_NAME=$(target_image_name $1)
+	echo ${TARGET_IMAGE_NAME%.*}.log
+}
+
 failure() {
 	echo "Build of $KALI_DIST/$KALI_ARCH live image failed" >&2
 	if [ -n "$VERBOSE" ]; then
@@ -160,6 +165,6 @@ for KALI_ARCH in $KALI_ARCHES; do
 		failure
 	fi
 	set -e
-	mv -f $IMAGE_NAME $(target_image_name $KALI_ARCH)
-	mv -f build.log $TARGET_DIR/$TARGET_SUBDIR/kali-linux-$KALI_VERSION-$KALI_ARCH.log
+	mv -f $IMAGE_NAME $TARGET_DIR/$(target_image_name $KALI_ARCH)
+	mv -f build.log $TARGET_DIR/$(target_build_log $KALI_ARCH)
 done
