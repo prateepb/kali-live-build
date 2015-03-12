@@ -42,7 +42,7 @@ target_build_log() {
 
 failure() {
 	echo "Build of $KALI_DIST/$KALI_ARCH live image failed" >&2
-	if [ -n "$VERBOSE" ]; then
+	if [ -z "$VERBOSE" ]; then
 		echo "Last 100 lines of build.log:" >&2
 		tail -n 100 build.log >&2
 	fi
@@ -128,14 +128,14 @@ if dpkg --compare-versions "$ver_live_build" lt 4.0.4-1kali2; then
 	exit 1
 fi
 if ! echo "$ver_live_build" | grep -q kali; then
-	echo "ERROR: You need a Kali patched live-build. Your current version: $ver_live_build"
+	echo "ERROR: You need a Kali patched live-build. Your current version: $ver_live_build" >&2
 	exit 1
 fi
 
 # We need root rights at some point
 if [ "$(whoami)" != "root" ]; then
 	if ! which $SUDO >/dev/null; then
-		echo "ERROR: $0 is not run as root and $SUDO is not available"
+		echo "ERROR: $0 is not run as root and $SUDO is not available" >&2
 		exit 1
 	fi
 else
