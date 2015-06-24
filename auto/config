@@ -4,8 +4,8 @@ set -e
 set -o pipefail # Bashism
 
 # You can put local mirrors here if you want
-kali_mirror=http://192.168.1.4:9999/kali
-kalisec_mirror=http://192.168.1.4:9999/kali-security
+kali_mirror=http://archive.kali.org/kali
+kalisec_mirror=http://archive.kali.org/kali-security
 
 ### DO NOT EDIT THE REST OF THIS FILE ###
 
