@@ -48,17 +48,14 @@ target_build_log() {
 
 default_version() {
 	case "$1" in
-	    kali|kali-current)
+	    kali-*)
+		echo "${1%kali-}"
+		;;
+	    kali)
 		echo "daily"
 		;;
-	    kali-rolling)
-		echo "rolling"
-		;;
-	    kali-dev)
-		echo "dev"
-		;;
 	    *)
-		echo "$(date +%Y%m%d)"
+		echo "$1"
 		;;
 	esac
 }
