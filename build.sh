@@ -3,12 +3,14 @@
 set -e
 set -o pipefail  # Bashism
 
-KALI_DIST=kali
-KALI_VERSION="${VERSION:-daily}"
-TARGET_DIR=$(dirname $0)/images
-TARGET_SUBDIR="kali-$KALI_VERSION"
+KALI_DIST="kali-current"
+KALI_VERSION=""
+KALI_VARIANT="default"
+TARGET_DIR="$(dirname $0)/images"
+TARGET_SUBDIR=""
 SUDO="sudo"
 VERBOSE=""
+HOST_ARCH=$(dpkg --print-architecture)
 
 image_name() {
 	local arch=$1
@@ -40,6 +42,23 @@ target_build_log() {
 	echo ${TARGET_IMAGE_NAME%.*}.log
 }
 
+default_version() {
+	case "$1" in
+	    kali|kali-current)
+		echo "daily"
+		;;
+	    kali-rolling)
+		echo "rolling"
+		;;
+	    kali-dev)
+		echo "dev"
+		;;
+	    *)
+		echo "$(date +%Y%m%d)"
+		;;
+	esac
+}
+
 failure() {
 	echo "Build of $KALI_DIST/$KALI_ARCH live image failed" >&2
 	if [ -z "$VERBOSE" ]; then
@@ -59,29 +78,32 @@ run_and_log() {
 }
 
 # Parsing command line options
-temp=$(getopt -o spdrva: -l single,proposed-updates,kali-dev,kali-rolling,verbose,arch:,get-image-path -- "$@")
+temp=$(getopt -o d:pva: -l distribution:,proposed-updates,kali-dev,kali-rolling,verbose,arch:,variant:,version:,get-image-path,subdir: -- "$@")
 eval set -- "$temp"
 while true; do
 	case "$1" in
-		-s|--single) OPT_single="1"; shift 1; ;;
+		-d|--distribution) KALI_DIST="$2"; shift 2; ;;
 		-p|--proposed-updates) OPT_pu="1"; shift 1; ;;
-		-d|--kali-dev) OPT_kali_dev="1"; shift 1; ;;
-		-r|--kali-rolling) OPT_kali_rolling="1"; shift 1; ;;
+		--kali-dev) KALI_DIST="kali-dev"; shift 1; ;;
+		--kali-rolling) KALI_DIST="kali-rolling"; shift 1; ;;
 		-a|--arch) KALI_ARCHES="${KALI_ARCHES:+$KALI_ARCHES } $2"; shift 2; ;;
 		-v|--verbose) VERBOSE="1"; shift 1; ;;
+		--variant) KALI_VARIANT="$2"; shift 2; ;;
+		--version) KALI_VERSION="$2"; shift 2; ;;
+		--subdir) TARGET_SUBDIR="$2"; shift 2; ;;
 		--get-image-path) ACTION="get-image-path"; shift 1; ;;
 		--) shift; break; ;;
 		*) echo "ERROR: Invalid command-line option: $1" >&2; exit 1; ;;
         esac
 done
 
-if [ -n "$OPT_single" ]; then
-	echo "WARNING: The --single option is deprecated, it's the default behaviour now." >&2
+# Set default values
+KALI_ARCHES=${KALI_ARCHES:-$HOST_ARCH}
+if [ -z "$KALI_VERSION" ]; then
+	KALI_VERSION="$(default_version $KALI_DIST)"
 fi
 
-HOST_ARCH=$(dpkg --print-architecture)
-KALI_ARCHES=${KALI_ARCHES:-$HOST_ARCH}
-
+# Check parameters
 for arch in $KALI_ARCHES; do
 	if [ "$arch" = "$HOST_ARCH" ]; then
 		continue
@@ -95,21 +117,12 @@ for arch in $KALI_ARCHES; do
 		;;
 	esac
 done
-
-KALI_CONFIG_OPTS="--"
-if [ -n "$OPT_kali_rolling" ]; then
-	KALI_CONFIG_OPTS="$KALI_CONFIG_OPTS --kali-rolling"
-	if [ "$KALI_VERSION" = "daily" ]; then
-		KALI_VERSION="rolling"
-	fi
-	KALI_DIST="kali-rolling"
-elif [ -n "$OPT_kali_dev" ]; then
-	KALI_CONFIG_OPTS="$KALI_CONFIG_OPTS --kali-dev"
-	if [ "$KALI_VERSION" = "daily" ]; then
-		KALI_VERSION="dev"
-	fi
-	KALI_DIST="kali-dev"
+if [ ! -d "$(dirname $0)/kali-config/variant-$KALI_VARIANT" ]; then
+	echo "ERROR: Unknown variant of Kali configuration: $KALI_VARIANT" >&2
 fi
+
+# Build parameters for lb config
+KALI_CONFIG_OPTS="--distribution $KALI_DIST -- --variant $KALI_VARIANT"
 if [ -n "$OPT_pu" ]; then
 	KALI_CONFIG_OPTS="$KALI_CONFIG_OPTS --proposed-updates"
 	KALI_DIST="$KALI_DIST+pu"
@@ -123,8 +136,8 @@ export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 # Or we ensure we have proper version installed
 ver_live_build=$(dpkg-query -f '${Version}' -W live-build)
-if dpkg --compare-versions "$ver_live_build" lt 4.0.4-1kali2; then
-	echo "ERROR: You need live-build (>= 4.0.4-1kali2), you have $ver_live_build" >&2
+if dpkg --compare-versions "$ver_live_build" lt 4.0.4-1kali6; then
+	echo "ERROR: You need live-build (>= 4.0.4-1kali6), you have $ver_live_build" >&2
 	exit 1
 fi
 if ! echo "$ver_live_build" | grep -q kali; then

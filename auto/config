@@ -1,8 +1,11 @@
-#!/bin/sh
+#!/bin/bash
+
+set -e
+set -o pipefail # Bashism
 
 # You can put local mirrors here if you want
-kali_mirror=http://archive.kali.org/kali
-kalisec_mirror=http://archive.kali.org/kali-security
+kali_mirror=http://192.168.1.4:9999/kali
+kalisec_mirror=http://192.168.1.4:9999/kali-security
 
 ### DO NOT EDIT THE REST OF THIS FILE ###
 
@@ -12,7 +15,7 @@ public_kalisec_mirror=http://security.kali.org/kali-security
 # Detect target architecture and filter args
 temp=""
 arch=$(dpkg --print-architecture)
-dist="kali"
+dist="kali-current"
 lb_opts=""
 while [ $# -gt 0 ]; do
    	arg="$1"
@@ -23,17 +26,16 @@ while [ $# -gt 0 ]; do
 		temp="$temp "'"'"$2"'"'
 		shift
 		;;
+	--distribution)
+		dist="$2"
+		shift
+		;;
+	--variant)
+		variant="$2"
+		shift
+		;;
 	-p|--proposed-updates)
 		enable_pu="1"
-		;;
-	-d|--kali-dev)
-		dist="kali-dev"
-		# No security repo
-		lb_opts="--security false --initsystem systemd"
-		;;
-	-r|--kali-rolling)
-		dist="kali-rolling"
-		lb_opts="--initsystem systemd"
 		;;
 	--)
 		# Skip the separator, it was added so that "lb config"
@@ -49,6 +51,9 @@ while [ $# -gt 0 ]; do
 done
 eval set -- "$temp"
 
+# Resolve release name
+dist=$(curl -s $kali_mirror/dists/$dist/Release | awk '/^Codename:/ {print $2}')
+
 # live-build doesn't work if --parent-debian-distribution is unknown of
 # debian-cd => we have to put a symlink so that it deals with kali like wheezy
 if [ ! -e ${LIVE_BUILD:-/usr/share/live/build}/data/debian-cd/$dist ]; then
@@ -61,6 +66,7 @@ if [ ! -e ${LIVE_BUILD:-/usr/share/live/build}/data/debian-cd/$dist ]; then
 	fi
 fi
 
+# Define options that vary across architectures
 case "$arch" in
     amd64)
 	lb_opts="$lb_opts --debian-installer live"
@@ -76,7 +82,20 @@ case "$arch" in
     ;;
 esac
 
+# Setup configuration files from variant and options
+
+# Drop all files that a former run might have put into place
+for file in $(cd kali-config && find . -type f); do
+    file=${file#./*/}
+    rm -f config/$file
+done
 rm -f config/archives/kali-proposed-updates.list.*
+
+# Copy over all files from official kali configuration
+cp -rT kali-config/common config
+[ ! -d kali-config/release-$dist ] || cp -rT kali-config/release-$dist config
+cp -rT kali-config/variant-$variant config
+
 if [ -n "$enable_pu" ]; then
 	mkdir -p config/archives
 	echo "deb $kali_mirror kali-proposed-updates main contrib non-free" \
@@ -110,7 +129,9 @@ lb config noauto \
 	$lb_opts \
 	"$@"
 
-if [ $dist = kali ]; then
+case "$dist" in
+    kali|moto)
 	# Don' use systemd for now
 	sed -i -e 's/systemd/sysvinit/' config/package-lists/live.list.chroot
-fi
+	;;
+esac
