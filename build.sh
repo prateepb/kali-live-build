@@ -34,7 +34,11 @@ target_image_name() {
 	if [ "$IMAGE_EXT" = "$IMAGE_NAME" ]; then
 		IMAGE_EXT="img"
 	fi
-	echo "$TARGET_SUBDIR/kali-linux-$KALI_VERSION-$KALI_ARCH.$IMAGE_EXT"
+	if [ "$KALI_VARIANT" = "default" ]; then
+		echo "$TARGET_SUBDIR/kali-linux-$KALI_VERSION-$KALI_ARCH.$IMAGE_EXT"
+	else
+		echo "$TARGET_SUBDIR/kali-linux-$KALI_VARIANT-$KALI_VERSION-$KALI_ARCH.$IMAGE_EXT"
+	fi
 }
 
 target_build_log() {
