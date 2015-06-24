@@ -49,7 +49,7 @@ target_build_log() {
 default_version() {
 	case "$1" in
 	    kali-*)
-		echo "${1%kali-}"
+		echo "${1#kali-}"
 		;;
 	    kali)
 		echo "daily"
