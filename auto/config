@@ -94,7 +94,7 @@ rm -f config/archives/kali-proposed-updates.list.*
 # Copy over all files from official kali configuration
 cp -rT kali-config/common config
 [ ! -d kali-config/release-$dist ] || cp -rT kali-config/release-$dist config
-cp -rT kali-config/variant-$variant config
+[ ! -d kali-config/variant-$variant ] || cp -rT kali-config/variant-$variant config
 
 if [ -n "$enable_pu" ]; then
 	mkdir -p config/archives
