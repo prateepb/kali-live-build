@@ -1,0 +1,23 @@
+# You always want those
+kali-linux
+kali-desktop-live
+
+# Kali applications
+
+# You can customize the set of Kali applications to install
+# (-full is the default, -all is absolutely everything, the rest
+# corresponds to various subsets)
+kali-linux-full
+# kali-linux-all
+# kali-linux-sdr
+# kali-linux-gpu
+# kali-linux-wireless
+# kali-linux-web
+# kali-linux-forensic
+# kali-linux-voip
+# kali-linux-pwtools
+# kali-linux-top10
+# kali-linux-rfid
+
+# Graphical desktop
+kali-desktop-kde
