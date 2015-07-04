@@ -61,11 +61,7 @@ default_version() {
 }
 
 failure() {
-	echo "Build of $KALI_DIST/$KALI_ARCH live image failed" >&2
-	if [ -z "$VERBOSE" ]; then
-		echo "Last 100 lines of build.log:" >&2
-		tail -n 100 build.log >&2
-	fi
+	echo "Build of $KALI_DIST/$KALI_ARCH live image failed (see build.log for details)" >&2
 	exit 2
 }
 
