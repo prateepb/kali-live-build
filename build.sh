@@ -61,6 +61,9 @@ default_version() {
 }
 
 failure() {
+	# Cleanup update-kali-menu that might stay around so that the
+	# build chroot can be properly unmounted
+	$SUDO pkill -f update-kali-menu || true
 	echo "Build of $KALI_DIST/$KALI_ARCH live image failed (see build.log for details)" >&2
 	exit 2
 }
