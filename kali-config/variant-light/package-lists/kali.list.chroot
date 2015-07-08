@@ -1,12 +1,13 @@
+# You always want those
 kali-desktop-live
-kali-desktop-common
-gnome-theme-kali
+
+# Kali applications
 iceweasel
 openssh-server
-lightdm
-xfce4
-xfce4-terminal
 nmap
 ncrack
 sqlmap
 aircrack-ng
+
+# A light desktop
+kali-desktop-xfce
