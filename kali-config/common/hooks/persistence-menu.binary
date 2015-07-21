@@ -12,7 +12,7 @@ label live-encrypted-persistence
     menu label ^Live USB Encrypted Persistence    (check kali.org/prst)
     linux /live/vmlinuz
     initrd /live/initrd.img
-    append boot=live persistent=cryptsetup persistence-encryption=luks noconfig=sudo username=root hostname=kali persistence
+    append boot=live persistent=cryptsetup persistence-encryption=luks noconfig=sudo username=root hostname=kali crypto
 
 END
 
