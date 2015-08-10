@@ -35,9 +35,9 @@ target_image_name() {
 		IMAGE_EXT="img"
 	fi
 	if [ "$KALI_VARIANT" = "default" ]; then
-		echo "$TARGET_SUBDIR/kali-linux-$KALI_VERSION-$KALI_ARCH.$IMAGE_EXT"
+		echo "${TARGET_SUBDIR:+$TARGET_SUBDIR/}kali-linux-$KALI_VERSION-$KALI_ARCH.$IMAGE_EXT"
 	else
-		echo "$TARGET_SUBDIR/kali-linux-$KALI_VARIANT-$KALI_VERSION-$KALI_ARCH.$IMAGE_EXT"
+		echo "${TARGET_SUBDIR:+$TARGET_SUBDIR/}kali-linux-$KALI_VARIANT-$KALI_VERSION-$KALI_ARCH.$IMAGE_EXT"
 	fi
 }
 
