@@ -108,8 +108,7 @@ lb config noauto \
 	--distribution "$dist" \
 	--debian-installer-distribution "$dist" \
 	--archive-areas "main contrib non-free" \
-	--bootstrap cdebootstrap \
-	--cdebootstrap-options "--keyring=/usr/share/keyrings/kali-archive-keyring.gpg --suite-config=wheezy" \
+	--debootstrap-options "--keyring=/usr/share/keyrings/kali-archive-keyring.gpg" \
 	--keyring-packages kali-archive-keyring \
 	--updates false \
 	--backports false \

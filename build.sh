@@ -145,6 +145,13 @@ if ! echo "$ver_live_build" | grep -q kali; then
 	exit 1
 fi
 
+# Check we have a good debootstrap
+ver_debootstrap=$(dpkg-query -f '${Version}' -W debootstrap)
+if ! echo "$ver_debootstrap" | grep -q kali; then
+	echo "ERROR: You need a Kali patched debootstrap. Your current version: $ver_debootstrap" >&2
+	exit 1
+fi
+
 # We need root rights at some point
 if [ "$(whoami)" != "root" ]; then
 	if ! which $SUDO >/dev/null; then
