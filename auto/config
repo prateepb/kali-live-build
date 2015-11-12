@@ -55,13 +55,13 @@ eval set -- "$temp"
 dist=$(curl -s $kali_mirror/dists/$dist/Release | awk '/^Codename:/ {print $2}')
 
 # live-build doesn't work if --parent-debian-distribution is unknown of
-# debian-cd => we have to put a symlink so that it deals with kali like wheezy
+# debian-cd => we have to put a symlink so that it deals with kali like sid
 if [ ! -e ${LIVE_BUILD:-/usr/share/live/build}/data/debian-cd/$dist ]; then
 	if [ -w ${LIVE_BUILD:-/usr/share/live/build}/data/debian-cd ]; then
-		ln -sf wheezy ${LIVE_BUILD:-/usr/share/live/build}/data/debian-cd/$dist
+		ln -sf sid ${LIVE_BUILD:-/usr/share/live/build}/data/debian-cd/$dist
 	else
 		echo "ERROR: Run this first:"
-		echo "ln -sf wheezy ${LIVE_BUILD:-/usr/share/live/build}/data/debian-cd/$dist"
+		echo "ln -sf sid ${LIVE_BUILD:-/usr/share/live/build}/data/debian-cd/$dist"
 		exit 1
 	fi
 fi
