@@ -1,6 +1,10 @@
 #!/bin/sh
 
-cat >>binary/isolinux/install.cfg <<END
+if [ ! -d isolinux ]; then
+    cd binary
+fi
+
+cat >>isolinux/install.cfg <<END
 
 label installspk
 	menu label Install with ^speech synthesis

@@ -1,6 +1,10 @@
 #!/bin/sh
 
-cat >>binary/isolinux/live.cfg <<END
+if [ ! -d isolinux ]; then
+    cd binary
+fi
+
+cat >>isolinux/live.cfg <<END
 
 label live-forensic
 	menu label Live (^forensic mode)
