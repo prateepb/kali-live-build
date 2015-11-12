@@ -124,6 +124,7 @@ lb config noauto \
 	--iso-publisher "Kali" \
 	--iso-volume "Kali Live" \
 	--linux-packages linux-image \
+	--memtest memtest86 \
 	--bootappend-live "boot=live username=root hostname=kali" \
 	$lb_opts \
 	"$@"
