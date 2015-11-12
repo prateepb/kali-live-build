@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Disable inetd by default, update-rc.d fails to disable it by
+# default due to https://bugs.debian.org/781155
+echo "Manually disabling inetd"
+systemctl disable inetd || true
