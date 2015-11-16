@@ -77,17 +77,18 @@ run_and_log() {
 	return $?
 }
 
+. $(dirname $0)/.getopt.sh
+
 # Parsing command line options
-temp=$(getopt -o d:pva: -l distribution:,proposed-updates,kali-dev,kali-rolling,verbose,arch:,variant:,version:,get-image-path,subdir: -- "$@")
+temp=$(getopt -o "$BUILD_OPTS_SHORT" -l "$BUILD_OPTS_LONG,get-image-path" -- "$@")
 eval set -- "$temp"
 while true; do
 	case "$1" in
 		-d|--distribution) KALI_DIST="$2"; shift 2; ;;
 		-p|--proposed-updates) OPT_pu="1"; shift 1; ;;
-		--kali-dev) KALI_DIST="kali-dev"; shift 1; ;;
-		--kali-rolling) KALI_DIST="kali-rolling"; shift 1; ;;
 		-a|--arch) KALI_ARCHES="${KALI_ARCHES:+$KALI_ARCHES } $2"; shift 2; ;;
 		-v|--verbose) VERBOSE="1"; shift 1; ;;
+		-s|--salt) shift; ;;
 		--variant) KALI_VARIANT="$2"; shift 2; ;;
 		--version) KALI_VERSION="$2"; shift 2; ;;
 		--subdir) TARGET_SUBDIR="$2"; shift 2; ;;
