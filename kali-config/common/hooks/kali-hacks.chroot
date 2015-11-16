@@ -10,3 +10,11 @@ systemctl disable inetd || true
 # not work for root
 # See https://bugs.kali.org/view.php?id=2392
 systemctl --user enable pulseaudio.service || true
+
+# Disable the udev rules renaming the network interfaces (can also be
+# achieved with kernel command line net.ifnames=0 but we don't have a nice
+# way to set it on the installed system)
+mkdir -p /etc/systemd/network
+ln -sf /dev/null /etc/systemd/network/90-mac-for-usb.link
+ln -sf /dev/null /etc/systemd/network/99-default.link
+update-initramfs -u
