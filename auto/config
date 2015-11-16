@@ -128,10 +128,3 @@ lb config noauto \
 	--bootappend-live "boot=live username=root hostname=kali" \
 	$lb_opts \
 	"$@"
-
-case "$dist" in
-    kali|moto)
-	# Don' use systemd for now
-	sed -i -e 's/systemd/sysvinit/' config/package-lists/live.list.chroot
-	;;
-esac
