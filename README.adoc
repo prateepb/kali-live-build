@@ -9,7 +9,7 @@ apt-get install curl git live-build cdebootstrap debootstrap
 == Build
 
 ----
-cd live-build-config
+cd kali-live-build
 ./build.sh --distribution sana --verbose --variant custom -- --apt-http-proxy=$http_proxy
 ----
 
