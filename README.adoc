@@ -1,0 +1,19 @@
+= Kali Live Build
+
+== Setup
+
+----
+apt-get install curl git live-build cdebootstrap debootstrap
+----
+
+== Build
+
+----
+cd live-build-config
+./build.sh --distribution sana --verbose --variant custom -- --apt-http-proxy=$http_proxy
+----
+
+== Docs
+
+* http://docs.kali.org/development/live-build-a-custom-kali-iso[Live Build a Custom Kali ISO]
+* http://live.debian.net/devel/live-build/[Debian live-build docs]
