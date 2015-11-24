@@ -3,7 +3,7 @@
 == Setup
 
 ----
-apt-get install curl git live-build cdebootstrap debootstrap
+apt-get install curl git live-build debootstrap
 ----
 
 == Build
