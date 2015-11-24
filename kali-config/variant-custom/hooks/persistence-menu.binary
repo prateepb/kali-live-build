@@ -1,0 +1,20 @@
+#!/bin/sh
+
+if [ ! -d isolinux ]; then
+    cd binary
+fi
+
+sed -i '/menu default/d' isolinux/live.cfg
+sed -i 's/timeout 0/timeout 30/' isolinux/isolinux.cfg
+
+cat >>isolinux/live.cfg <<END
+
+label live-encrypted-persistence
+    menu label ^Live USB Encrypted Persistence    (check kali.org/prst)
+    menu default
+    linux /live/vmlinuz
+    initrd /live/initrd.img
+    append boot=live persistent=cryptsetup persistence-encryption=luks noconfig=sudo username=root hostname=kali persistence
+
+END
+
