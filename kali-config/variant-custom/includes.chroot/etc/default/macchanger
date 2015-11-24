@@ -1,0 +1,11 @@
+# before bringing up any network interface, run macchanger. Careful, this is
+# not guaranteed to prevent leaking your real MAC address before the new one
+# gets assigned!
+#
+ENABLE_ON_POST_UP_DOWN=true
+
+
+# by default, macchanger runs on all network interfaces but loopback (lo).  If
+# you only want it to run on specific network interfaces, set them here:
+#
+#ENABLE_INTERFACES="wlan0"
