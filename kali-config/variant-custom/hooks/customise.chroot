@@ -1,5 +1,7 @@
 #!/bin/bash
 
+date > /iso_build_date
+
 git clone https://github.com/prateepb/dotfiles.git /root/.dotfiles
 /root/.dotfiles/install.sh
 
