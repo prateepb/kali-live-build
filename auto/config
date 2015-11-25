@@ -125,6 +125,6 @@ lb config noauto \
 	--iso-volume "Kali Live" \
 	--linux-packages linux-image \
 	--memtest memtest86 \
-	--bootappend-live "boot=live username=root hostname=kali timezone=Europe/Dublin locales=en_IE.UTF-8 keyboard-layouts=gb keyboard-variants=mac"
+	--bootappend-live "boot=live username=root hostname=kali timezone=Europe/Dublin locales=en_IE.UTF-8 keyboard-layouts=gb keyboard-variants=mac" \
 	$lb_opts \
 	"$@"
