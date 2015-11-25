@@ -14,7 +14,7 @@ label live-encrypted-persistence
     menu default
     linux /live/vmlinuz
     initrd /live/initrd.img
-    append boot=live persistent=cryptsetup persistence-encryption=luks noconfig=sudo username=root hostname=kali persistence
+    append boot=live persistent=cryptsetup persistence-encryption=luks noconfig=sudo username=root hostname=kali persistence timezone=Europe/Dublin locales=en_IE.UTF-8 keyboard-layouts=gb keyboard-variants=mac
 
 END
 
