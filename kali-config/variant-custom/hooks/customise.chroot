@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -o errexit
+set -o nounset
+
 date > /iso_build_date
 
 git clone https://github.com/prateepb/dotfiles.git /root/.dotfiles
