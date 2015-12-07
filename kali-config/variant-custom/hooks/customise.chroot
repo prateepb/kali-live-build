@@ -8,5 +8,11 @@ date > /iso_build_date
 git clone https://github.com/prateepb/dotfiles.git /root/.dotfiles
 /root/.dotfiles/install.sh
 
-mkdir -p /root/opt
+chmod 700 /root
+mkdir -p /root/bin /root/opt
 
+# Install f.lux
+cd /root/bin
+curl -s -o - https://justgetflux.com/linux/xflux64.tgz | tar zxf -
+chown root:root xflux
+chmod 700 xflux
