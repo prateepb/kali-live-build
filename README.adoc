@@ -1,5 +1,7 @@
 = Kali Live Build
 
+Upstream: http://git.kali.org/gitweb/?p=live-build-config.git;a=summary[Kali's live-build configuration]
+
 == Setup
 
 ----
