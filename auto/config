@@ -82,6 +82,17 @@ case "$arch" in
     ;;
 esac
 
+# Define options that vary across releases
+case "$dist" in
+    sana)
+	lb_opts="$lb_opts --mirror-chroot-security $kalisec_mirror"
+	lb_opts="$lb_opts --mirror-binary-security $public_kalisec_mirror"
+    ;;
+    *)
+	lb_opts="$lb_opts --security false"
+    ;;
+esac
+
 # Setup configuration files from variant and options
 
 # Drop all files that a former run might have put into place
@@ -117,9 +128,7 @@ lb config noauto \
 	--firmware-chroot true \
 	--mirror-bootstrap "$kali_mirror" \
 	--mirror-debian-installer "$kali_mirror" \
-	--mirror-chroot-security "$kalisec_mirror" \
 	--mirror-binary "$public_kali_mirror" \
-	--mirror-binary-security "$public_kalisec_mirror" \
 	--iso-application "Kali Linux" \
 	--iso-publisher "Kali" \
 	--iso-volume "Kali Live" \
