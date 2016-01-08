@@ -20,7 +20,7 @@ image_name() {
 			IMAGE_TEMPLATE="live-image-ARCH.hybrid.iso"
 		;;
 		armel|armhf)
-			IMAGE_TEMPLATE="live-image-ARCH"
+			IMAGE_TEMPLATE="live-image-ARCH.img"
 		;;
 	esac
 	echo $IMAGE_TEMPLATE | sed -e "s/ARCH/$arch/"
@@ -137,8 +137,8 @@ export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 # Or we ensure we have proper version installed
 ver_live_build=$(dpkg-query -f '${Version}' -W live-build)
-if dpkg --compare-versions "$ver_live_build" lt 4.0.4-1kali6; then
-	echo "ERROR: You need live-build (>= 4.0.4-1kali6), you have $ver_live_build" >&2
+if dpkg --compare-versions "$ver_live_build" lt 1:20151215kali1; then
+	echo "ERROR: You need live-build (>= 1:20151215kali1), you have $ver_live_build" >&2
 	exit 1
 fi
 if ! echo "$ver_live_build" | grep -q kali; then
