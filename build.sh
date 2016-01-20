@@ -3,7 +3,7 @@
 set -e
 set -o pipefail  # Bashism
 
-KALI_DIST="kali-current"
+KALI_DIST="kali-rolling"
 KALI_VERSION=""
 KALI_VARIANT="default"
 TARGET_DIR="$(dirname $0)/images"
@@ -50,9 +50,6 @@ default_version() {
 	case "$1" in
 	    kali-*)
 		echo "${1#kali-}"
-		;;
-	    kali)
-		echo "daily"
 		;;
 	    *)
 		echo "$1"
