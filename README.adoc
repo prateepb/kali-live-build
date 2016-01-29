@@ -12,7 +12,7 @@ apt-get install curl git live-build debootstrap
 
 ----
 cd kali-live-build
-./build.sh --distribution sana --verbose --variant custom
+./build.sh --distribution kali-rolling --verbose --variant custom
 ----
 
 *Caching*
@@ -20,7 +20,7 @@ cd kali-live-build
 via a caching proxy e.g. http://www.squid-cache.org/[Squid]:
 
 ----
-./build.sh --distribution sana --verbose --variant custom -- --apt-http-proxy=http://localhost:3128/
+./build.sh --distribution kali-rolling --verbose --variant custom -- --apt-http-proxy=http://localhost:3128/
 ----
 
 Example link:squid.conf[squid.conf]
