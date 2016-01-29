@@ -20,7 +20,8 @@ cd kali-live-build
 via a caching proxy e.g. http://www.squid-cache.org/[Squid]:
 
 ----
-./build.sh --distribution kali-rolling --verbose --variant custom -- --apt-http-proxy=http://localhost:3128/
+./build.sh --distribution kali-rolling --verbose --variant custom -- \
+--apt-http-proxy=http://localhost:3129/
 ----
 
 Example link:squid.conf[squid.conf]
