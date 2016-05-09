@@ -15,7 +15,7 @@ public_kalisec_mirror=http://security.kali.org/kali-security
 # Detect target architecture and filter args
 temp=""
 arch=$(dpkg --print-architecture)
-dist="kali-current"
+dist="kali-rolling"
 lb_opts=""
 while [ $# -gt 0 ]; do
    	arg="$1"
