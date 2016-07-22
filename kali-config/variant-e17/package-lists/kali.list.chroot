@@ -21,4 +21,5 @@ kali-linux-full
 
 # Graphical desktop
 kali-desktop-common
+xorg
 e17
