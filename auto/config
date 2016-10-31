@@ -5,12 +5,10 @@ set -o pipefail # Bashism
 
 # You can put local mirrors here if you want
 kali_mirror=http://archive.kali.org/kali
-kalisec_mirror=http://archive.kali.org/kali-security
 
 ### DO NOT EDIT THE REST OF THIS FILE ###
 
 public_kali_mirror=http://http.kali.org/kali
-public_kalisec_mirror=http://security.kali.org/kali-security
 
 # Detect target architecture and filter args
 temp=""
@@ -82,17 +80,6 @@ case "$arch" in
     ;;
 esac
 
-# Define options that vary across releases
-case "$dist" in
-    sana)
-	lb_opts="$lb_opts --mirror-chroot-security $kalisec_mirror"
-	lb_opts="$lb_opts --mirror-binary-security $public_kalisec_mirror"
-    ;;
-    *)
-	lb_opts="$lb_opts --security false"
-    ;;
-esac
-
 # Setup configuration files from variant and options
 
 # Drop all files that a former run might have put into place
@@ -135,5 +122,6 @@ lb config noauto \
 	--linux-packages linux-image \
 	--memtest memtest86 \
 	--bootappend-live "boot=live username=root hostname=kali" \
+	--security false \
 	$lb_opts \
 	"$@"
