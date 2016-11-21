@@ -5,7 +5,7 @@ Upstream: http://git.kali.org/gitweb/?p=live-build-config.git;a=summary[Kali's l
 == Setup
 
 ----
-apt-get install curl git live-build debootstrap
+apt-get install curl git live-build cdebootstrap
 ----
 
 == Build
