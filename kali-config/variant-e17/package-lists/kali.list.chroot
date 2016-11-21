@@ -21,4 +21,7 @@ kali-linux-full
 
 # Graphical desktop
 kali-desktop-common
+xorg
 e17
+# To tweak default configuration with help of /usr/bin/eet
+libeet-bin
