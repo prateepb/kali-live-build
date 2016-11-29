@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# Handle systems where /lib is not merged in /usr/lib
+if [ ! -h /lib ]; then
+    mv /usr/lib/live/config/* /lib/live/config/
+fi
+
 # Manually enabling pulseaudio for root since autospawning does
 # not work for root
 # See https://bugs.kali.org/view.php?id=2392
