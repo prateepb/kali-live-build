@@ -4,7 +4,7 @@ set -e
 set -o pipefail # Bashism
 
 # You can put local mirrors here if you want
-kali_mirror=http://archive.kali.org/kali
+kali_mirror=http://192.168.1.4:9999/kali
 
 ### DO NOT EDIT THE REST OF THIS FILE ###
 
@@ -121,7 +121,8 @@ lb config noauto \
 	--iso-volume "Kali Live" \
 	--linux-packages linux-image \
 	--memtest memtest86 \
-	--bootappend-live "boot=live username=root hostname=kali" \
+	--bootappend-live "boot=live components splash username=root hostname=kali" \
+	--bootappend-live-failsafe "boot=live components username=root hostname=kali memtest noapic noapm nodma nomce nolapic nomodeset nosmp nosplash vga=normal" \
 	--security false \
 	$lb_opts \
 	"$@"
