@@ -6,6 +6,7 @@ cache
 chroot
 chroot.packages.install
 chroot.packages.live
+.mirror
 .stage
 .lock
 .build/

@@ -3,8 +3,13 @@
 set -e
 set -o pipefail # Bashism
 
-# You can put local mirrors here if you want
-kali_mirror=http://archive.kali.org/kali
+# You can put a local mirror here if you want (or you can set
+# it in .mirror)
+if [ -e .mirror ]; then
+    kali_mirror=$(cat .mirror)
+else
+    kali_mirror=http://archive.kali.org/kali
+fi
 
 ### DO NOT EDIT THE REST OF THIS FILE ###
 
