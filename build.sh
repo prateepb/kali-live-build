@@ -138,10 +138,6 @@ if dpkg --compare-versions "$ver_live_build" lt 1:20151215kali1; then
 	echo "ERROR: You need live-build (>= 1:20151215kali1), you have $ver_live_build" >&2
 	exit 1
 fi
-if ! echo "$ver_live_build" | grep -q kali; then
-	echo "ERROR: You need a Kali patched live-build. Your current version: $ver_live_build" >&2
-	exit 1
-fi
 
 # Check we have a good debootstrap
 ver_debootstrap=$(dpkg-query -f '${Version}' -W debootstrap)

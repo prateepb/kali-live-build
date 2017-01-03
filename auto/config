@@ -3,8 +3,13 @@
 set -e
 set -o pipefail # Bashism
 
-# You can put local mirrors here if you want
-kali_mirror=http://archive.kali.org/kali
+# You can put a local mirror here if you want (or you can set
+# it in .mirror)
+if [ -e .mirror ]; then
+    kali_mirror=$(cat .mirror)
+else
+    kali_mirror=http://archive.kali.org/kali
+fi
 
 ### DO NOT EDIT THE REST OF THIS FILE ###
 
@@ -121,7 +126,8 @@ lb config noauto \
 	--iso-volume "Kali Live" \
 	--linux-packages linux-image \
 	--memtest memtest86 \
-	--bootappend-live "boot=live username=root hostname=kali timezone=Europe/Dublin locales=en_IE.UTF-8 keyboard-layouts=gb keyboard-variants=mac" \
+	--bootappend-live "boot=live components splash username=root hostname=kali timezone=Europe/Dublin locales=en_IE.UTF-8 keyboard-layouts=gb keyboard-variants=mac" \
+	--bootappend-live-failsafe "boot=live components username=root hostname=kali memtest noapic noapm nodma nomce nolapic nomodeset nosmp nosplash vga=normal" \
 	--security false \
 	$lb_opts \
 	"$@"
