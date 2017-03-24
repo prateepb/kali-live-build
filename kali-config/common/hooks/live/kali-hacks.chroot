@@ -10,7 +10,7 @@ fi
 # See https://bugs.kali.org/view.php?id=2392
 XDG_RUNTIME_DIR=/run/user/0 systemctl --user enable pulseaudio.service || true
 # Note that XDG_RUNTIME_DIR is just a work-around for
-# https://github.com/systemd/systemd/issues/5260 until we have systemd 133
+# https://github.com/systemd/systemd/issues/5260 until we have systemd 233
 
 # Disable the udev rules renaming the network interfaces (can also be
 # achieved with kernel command line net.ifnames=0 but we don't have a nice
@@ -20,3 +20,8 @@ ln -sf /dev/null /etc/systemd/network/90-mac-for-usb.link
 ln -sf /dev/null /etc/systemd/network/99-default.link
 echo > /etc/udev/rules.d/73-special-net-names.rules
 update-initramfs -u
+
+# Run updatedb to initialize the database for the locate command
+if [ -x "$(which updatedb 2>/dev/null)" ]; then
+    updatedb
+fi
