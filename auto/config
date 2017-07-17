@@ -128,6 +128,7 @@ lb config noauto \
 	--memtest memtest86 \
 	--bootappend-live "boot=live components splash username=root hostname=kali" \
 	--bootappend-live-failsafe "boot=live components username=root hostname=kali memtest noapic noapm nodma nomce nolapic nomodeset nosmp nosplash vga=normal" \
+	--bootappend-install "net.ifnames=0" \
 	--security false \
 	$lb_opts \
 	"$@"
