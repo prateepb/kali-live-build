@@ -8,9 +8,7 @@ fi
 # Manually enabling pulseaudio for root since autospawning does
 # not work for root
 # See https://bugs.kali.org/view.php?id=2392
-XDG_RUNTIME_DIR=/run/user/0 systemctl --user enable pulseaudio.service || true
-# Note that XDG_RUNTIME_DIR is just a work-around for
-# https://github.com/systemd/systemd/issues/5260 until we have systemd 233
+systemctl --user enable pulseaudio.service || true
 
 # Disable the udev rules renaming the network interfaces (can also be
 # achieved with kernel command line net.ifnames=0 but we don't have a nice
