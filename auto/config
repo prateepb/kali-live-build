@@ -85,6 +85,16 @@ case "$arch" in
     ;;
 esac
 
+# Define options that vary across distributions
+case "$dist" in
+    kali-last-snapshot)
+	# We don't want kali-last-snapshot to end up in the image, it
+	# should be replaced with kali-rolling
+	lb_opts="$lb_opts --distribution-binary kali-rolling"
+	lb_opts="$lb_opts --debootstrap-script /usr/share/debootstrap/scripts/kali-rolling"
+    ;;
+esac
+
 # Setup configuration files from variant and options
 
 # Drop all files that a former run might have put into place
@@ -128,6 +138,7 @@ lb config noauto \
 	--memtest memtest86 \
 	--bootappend-live "boot=live components splash username=root hostname=kali timezone=Europe/Dublin locales=en_IE.UTF-8 keyboard-layouts=gb keyboard-variants=mac" \
 	--bootappend-live-failsafe "boot=live components username=root hostname=kali memtest noapic noapm nodma nomce nolapic nomodeset nosmp nosplash vga=normal" \
+	--bootappend-install "net.ifnames=0" \
 	--security false \
 	$lb_opts \
 	"$@"

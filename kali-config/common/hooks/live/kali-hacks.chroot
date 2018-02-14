@@ -18,3 +18,8 @@ ln -sf /dev/null /etc/systemd/network/90-mac-for-usb.link
 ln -sf /dev/null /etc/systemd/network/99-default.link
 echo > /etc/udev/rules.d/73-special-net-names.rules
 update-initramfs -u
+
+# Run updatedb to initialize the database for the locate command
+if [ -x "$(which updatedb 2>/dev/null)" ]; then
+    updatedb
+fi

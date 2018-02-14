@@ -18,7 +18,6 @@ firmware-bnx2
 firmware-libertas
 bluez-firmware
 firmware-brcm80211
-#if DISTRIBUTION safi kali-next kali-rolling kali-dev
 firmware-amd-graphics
 firmware-cavium
 firmware-intel-sound
@@ -28,4 +27,3 @@ firmware-qlogic
 firmware-samsung
 firmware-siano
 firmware-ti-connectivity
-#endif
