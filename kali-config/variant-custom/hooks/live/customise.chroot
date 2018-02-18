@@ -10,3 +10,7 @@ git clone https://github.com/prateepb/dotfiles.git /root/.dotfiles
 
 chmod 700 /root
 mkdir -p /root/bin /root/opt
+
+# https://unix.stackexchange.com/questions/387843/how-can-i-resize-the-applications-menu-item-in-gnome
+sed -i.orig 's/this.categoriesBox.box.width = 300;/this.mainBox.box.width = 1200;\n        this.categoriesBox.box.width = 600;/' /usr/share/gnome-shell/extensions/apps-menu@gnome-shell-extensions.gcampax.github.com/extension.js
+
