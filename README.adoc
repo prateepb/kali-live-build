@@ -1,32 +1,79 @@
 = Kali Live Build
 
-Upstream: http://git.kali.org/gitweb/?p=live-build-config.git;a=summary[Kali's live-build configuration]
+This repository will allow you to build a custom Kali ISO. The main benefit is to use it as a https://docs.kali.org/downloading/kali-linux-live-usb-install[bootable USB drive].
+
+From the Kali Website:
+
+____
+Our favorite way, and the fastest method, for getting up and running with Kali Linux is to run it “live” from a USB drive. This method has several advantages:
+
+* It’s non-destructive — it makes no changes to the host system’s hard drive or installed OS, and to go back to normal operations, you simply remove the “Kali Live” USB drive and restart the system.
+* It’s portable — you can carry Kali Linux in your pocket and have it running in minutes on an available system
+* It’s customizable — you can https://docs.kali.org/?p=52[roll your own custom Kali Linux ISO image] and put it onto a USB drive using the same procedures
+* It’s potentially persistent — with a bit of extra effort, you can configure your Kali Linux “live” USB drive to have https://docs.kali.org/?p=4902[persistent storage], so the data you collect is saved across reboots
+____
+
+https://docs.kali.org/development/live-build-a-custom-kali-iso[Read this first]
+
+*Upstream:*
+
+* http://git.kali.org/gitweb/?p=live-build-config.git;a=summary[Kali's live-build configuration]
+* git://git.kali.org/live-build-config.git
 
 == Setup
+
+Ideally, you should build your custom Kali ISO from *within a pre-existing Kali environment.*
 
 ----
 apt-get install curl git live-build cdebootstrap
 ----
 
+== Customisations
+
+I'm using a custom variant under the link:kali-config/variant-custom[kali-config/variant-custom] directory. This includes:
+
+* link:kali-config/variant-custom/package-lists/kali.list.chroot[All of the packages from the default variant] (`kali-config/variant-custom/package-lists/kali.list.chroot`)
+* link:kali-config/variant-custom/package-lists/custom.list.chroot[Additional packages per my preferences] (`kali-config/variant-custom/package-lists/custom.list.chroot`)
+* link:kali-config/variant-custom/hooks/live/customise.chroot[Customisation script] (`kali-config/variant-custom/hooks/live/customise.chroot`)
+** clones https://github.com/prateepb/dotfiles[my personal dotfiles]
+**  https://unix.stackexchange.com/questions/387843/how-can-i-resize-the-applications-menu-item-in-gnome[resizes the gnome menu]
+
+I've also customised timezone, keyboard layout and locale in:
+
+* link:auto/config[`auto/config`]
+* link:kali-config/variant-custom/hooks/live/persistence-menu.binary[`kali-config/variant-custom/hooks/live/persistence-menu.binary`]
+
 == Build
+
+To build and make use of the custom variant:
 
 ----
 cd kali-live-build
 ./build.sh --distribution kali-rolling --verbose --variant custom
 ----
 
-*Caching*
+=== Caching
 
-via a caching proxy e.g. http://www.squid-cache.org/[Squid]:
-
-----
-./build.sh --distribution kali-rolling --verbose --variant custom -- \
---apt-http-proxy=http://localhost:3128/
-----
+If you're likely to run multiple builds, it's useful to route everything via a caching proxy e.g. http://www.squid-cache.org/[Squid]. This will significantly speed up subsequent runs.
 
 Example link:squid.conf[squid.conf]
 
-== Docs
+----
+cd kali-live-build
+apt-get install squid
+cp squid.conf /etc/squid/squid.conf
+/etc/init.d/squid start
+----
+
+Now you can run `build.sh` with the `--apt-http-proxy` parameter:
+
+----
+export http_proxy=http://localhost:3128/
+./build.sh --distribution kali-rolling --verbose --variant custom -- \
+--apt-http-proxy=${http_proxy}
+----
+
+== References
 
 * http://docs.kali.org/development/live-build-a-custom-kali-iso[Live Build a Custom Kali ISO]
 * http://docs.kali.org/downloading/kali-linux-live-usb-install[Making a Kali Bootable USB Drive]
