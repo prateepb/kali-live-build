@@ -22,7 +22,9 @@ https://docs.kali.org/development/live-build-a-custom-kali-iso[Read this first]
 
 == Setup
 
-Ideally, you should build your custom Kali ISO from *within a pre-existing Kali environment.*
+Ideally, you should build your custom Kali ISO from *within a pre-existing Kali environment.* Using a https://www.kali.org/downloads/[lightweight] or virtualised (https://www.offensive-security.com/kali-linux-vm-vmware-virtualbox-hyperv-image-download/[VMware/VirtualBox]) image is recommended.
+
+As `root`:
 
 ----
 apt-get install curl git live-build cdebootstrap
@@ -52,6 +54,8 @@ cd kali-live-build
 ./build.sh --distribution kali-rolling --verbose --variant custom
 ----
 
+When complete, the resulting ISO image can be found at `images/kali-linux-custom-rolling-amd64.iso`
+
 === Caching
 
 If you're likely to run multiple builds, it's useful to route everything via a caching proxy e.g. http://www.squid-cache.org/[Squid]. This will significantly speed up subsequent runs.
@@ -72,6 +76,116 @@ export http_proxy=http://localhost:3128/
 ./build.sh --distribution kali-rolling --verbose --variant custom -- \
 --apt-http-proxy=${http_proxy}
 ----
+
+== Making a Bootable USB Drive
+
+* Read http://docs.kali.org/downloading/kali-linux-live-usb-install[Live Build a Custom Kali ISO] and heed the warning:
++
+WARNING: Although the process of imaging Kali on a USB drive is very easy, you can just as easily overwrite a disk drive you didn’t intend to with `dd` if you do not understand what you are doing, or if you specify an incorrect output path. Double-check what you’re doing _before_ you do it, it’ll be too late afterwards.
++
+* I usually run the whole build process from a Kali instance running inside a VirtualBox VM. I can then mount the USB disk in the VM and safely write it with no risk.
+
+== Partitioning and persistence
+
+* Read http://docs.kali.org/downloading/kali-linux-live-usb-persistence[Kali Linux Live USB Persistence]
+
+After writing the ISO to the USB drive, you'll see a partition scheme similar to the following:
+
+----
+root@kali:~$ fdisk -l /dev/sdb
+Disk /dev/sdb: 7.5 GiB, 8004304896 bytes, 15633408 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0xa966b446
+
+Device     Boot   Start     End Sectors  Size Id Type
+/dev/sdb1  *         64 5952127 5952064  2.9G 17 Hidden HPFS/NTFS
+/dev/sdb2       5952128 5953535    1408  704K  1 FAT12
+----
+
+As this is an 8GB drive, there's sufficient space left over for:
+
+* A FAT data partition of 1GB (useful if you want to access from mac or windows)
+* An encrypted persistence partition in the remaining space ~ 3.6GB
+
+To partition the free space:
+
+[subs="verbatim,quotes"]
+----
+root@kali:~$ *fdisk /dev/sdb*
+
+Welcome to fdisk (util-linux 2.31.1).
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+
+Command (m for help): *n*                                            <1>
+Partition type
+   p   primary (2 primary, 0 extended, 2 free)
+   e   extended (container for logical partitions)
+Select (default p): p
+Partition number (3,4, default 3): 3
+First sector (5953536-15633407, default 5953536):
+Last sector, +sectors or +size{K,M,G,T,P} (5953536-15633407, default 15633407): +1G
+
+Created a new partition 3 of type 'Linux' and of size 1 GiB.
+
+Command (m for help): *t*                                            <2>
+Partition number (1-3, default 3): *3*
+Hex code (type L to list all codes): *b*
+
+Changed type of partition 'Linux' to 'W95 FAT32'.
+
+Command (m for help): *n*                                            <3>
+Partition type
+   p   primary (3 primary, 0 extended, 1 free)
+   e   extended (container for logical partitions)
+Select (default e): *p*
+
+Selected partition 4
+First sector (8050688-15633407, default 8050688):
+Last sector, +sectors or +size{K,M,G,T,P} (8050688-15633407, default 15633407):
+
+Created a new partition 4 of type 'Linux' and of size 3.6 GiB.
+
+Command (m for help): *p*
+Disk /dev/sdb: 7.5 GiB, 8004304896 bytes, 15633408 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0xa966b446
+
+Device     Boot   Start      End Sectors  Size Id Type
+/dev/sdb1  *         64  5952127 5952064  2.9G 17 Hidden HPFS/NTFS
+/dev/sdb2       5952128  5953535    1408  704K  1 FAT12
+/dev/sdb3       5953536  8050687 2097152    1G  b W95 FAT32
+/dev/sdb4       8050688 15633407 7582720  3.6G 83 Linux
+
+Command (m for help): *w*                                            <4>
+The partition table has been altered.
+Calling ioctl() to re-read partition table.
+Syncing disks.
+----
+<1> create new primary partition (data)
+<2> change partition type to FAT
+<3> create new primary partition (encrypted persistence)
+<4> save changes and write partition table
+
+=== Formatting the shared partition
+
+----
+apt-get install dosfstools
+mkfs.fat /dev/sdb3
+----
+
+=== Setting up an encrypted persistence partition
+
+The script link:live_usb_persistence.sh[`live_usb_persistence.sh`] will setup everything as per http://docs.kali.org/downloading/kali-linux-live-usb-persistence[Kali Linux Live USB Persistence]
+
+WARNING: Read the script. Make sure the `DEVICE` variable is correct for your system
 
 == References
 
