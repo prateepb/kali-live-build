@@ -37,3 +37,10 @@ update-initramfs -u
 if [ -x "$(which updatedb 2>/dev/null)" ]; then
     updatedb
 fi
+
+# Mark kernel related packages on hold so that they are not upgraded in
+# the live system
+for pkg in $(dpkg-query -W -f'${binary:Package}\n' 'linux-image-*' 'linux-headers-*' 'linux-kbuild-*')
+do
+    apt-mark hold $pkg
+done
