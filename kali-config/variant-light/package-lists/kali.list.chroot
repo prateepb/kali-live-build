@@ -2,7 +2,7 @@
 kali-desktop-live
 
 # Kali applications
-iceweasel
+firefox-esr
 openssh-server
 nmap
 ncrack
