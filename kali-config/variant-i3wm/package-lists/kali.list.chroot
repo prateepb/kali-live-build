@@ -20,8 +20,4 @@ kali-linux-full
 # kali-linux-wireless
 
 # Graphical desktop
-kali-desktop-common
-xorg
-dmenu
-conky
-i3
+kali-desktop-i3
