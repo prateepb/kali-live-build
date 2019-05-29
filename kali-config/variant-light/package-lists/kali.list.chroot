@@ -1,13 +1,16 @@
-# You always want those
+# You always want this
 kali-desktop-live
 
 # Kali applications
-firefox-esr
-openssh-server
-nmap
-ncrack
-sqlmap
 aircrack-ng
+firefox-esr
+ncrack
+nmap
+openssh-server
+sqlmap
+# You can customize the set of Kali applications to install
+# (See: https://tools.kali.org/kali-metapackages)
+# kali-linux-top10
 
-# A light desktop
+# (Light) Graphical desktop - XFCE
 kali-desktop-xfce
