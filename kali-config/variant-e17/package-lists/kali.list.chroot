@@ -20,9 +20,4 @@ kali-linux-full
 # kali-linux-wireless
 
 # Graphical desktop
-kali-desktop-common
-xorg
-enlightenment
-lightdm
-# To tweak default configuration with help of /usr/bin/eet
-libeet-bin
+kali-desktop-e17
