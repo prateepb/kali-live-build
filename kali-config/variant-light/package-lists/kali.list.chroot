@@ -1,16 +1,13 @@
-# You always want this
+# You always want those
+#kali-linux-core
 kali-desktop-live
 
 # Kali applications
-aircrack-ng
-firefox-esr
-ncrack
-nmap
-openssh-server
-sqlmap
-# You can customize the set of Kali applications to install
-# (See: https://tools.kali.org/kali-metapackages)
-# kali-linux-top10
+#<package>
+# You can customize the set of Kali metapackages (groups of tools) to install
+# For the complete list see: https://tools.kali.org/kali-metapackages
+kali-linux-light
+# kali-tools-top10
 
-# (Light) Graphical desktop - XFCE
+# Graphical desktop
 kali-desktop-xfce
