@@ -7,7 +7,7 @@ kali-desktop-live
 # You can customize the set of Kali applications to install
 # (-full is the default, -all is absolutely everything, the rest
 # corresponds to various subsets. See: https://tools.kali.org/kali-metapackages)
-kali-linux-full
+kali-linux-default
 # kali-linux-all
 # kali-linux-forensic
 # kali-linux-gpu
