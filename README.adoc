@@ -18,7 +18,7 @@ https://docs.kali.org/development/live-build-a-custom-kali-iso[Read this first]
 *Upstream:*
 
 * http://git.kali.org/gitweb/?p=live-build-config.git;a=summary[Kali's live-build configuration]
-* git://git.kali.org/live-build-config.git
+* https://gitlab.com/kalilinux/build-scripts/live-build-config.git
 
 == Setup
 
