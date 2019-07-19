@@ -51,7 +51,7 @@ To build and make use of the custom variant:
 
 ----
 cd kali-live-build
-./build.sh --distribution kali-rolling --verbose --variant custom
+./build.sh --verbose --variant custom
 ----
 
 When complete, the resulting ISO image can be found at `images/kali-linux-custom-rolling-amd64.iso`
@@ -73,7 +73,7 @@ Now you can run `build.sh` with the `--apt-http-proxy` parameter:
 
 ----
 export http_proxy=http://localhost:3128/
-./build.sh --distribution kali-rolling --verbose --variant custom -- \
+./build.sh --verbose --variant custom -- \
 --apt-http-proxy=${http_proxy}
 ----
 
